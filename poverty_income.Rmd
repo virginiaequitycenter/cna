@@ -1,0 +1,122 @@
+---
+title: "Community Needs Assessment: Income, Poverty"
+output: html_document
+date: "2024-09-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(tidyverse)
+library(leaflet)
+library(viridis)
+
+load("poverty.RData")
+load("income.RData")
+```
+
+## Income {.tabset}
+
+The figure below shows the distribution of income -- the percent of the population or of families within each income range -- by county.
+
+### Percent of People
+
+```{r inc1}
+ggplot(income_county) +
+  geom_col(aes(x = fct_rev(income_bin), y = percent, fill = income_bin)) +
+  scale_fill_viridis_d(direction = -1) +
+  guides(fill = FALSE) + 
+  coord_flip() +
+  facet_wrap(~NAME) +
+  labs(x = "", y = "Percent of Population", 
+       title = "Population (%) by Income Range")
+```
+
+### Percent of Families
+
+```{r inc2}
+ggplot(fam_income_county) +
+  geom_col(aes(x = fct_rev(income_bin), y = percent, fill = income_bin)) +
+  scale_fill_viridis_d(direction = -1) +
+  guides(fill = FALSE) + 
+  coord_flip() +
+  facet_wrap(~NAME) +
+  labs(x = "", y = "Percent of Families", 
+       title = "Families (%) by Income Range")
+```
+
+## Poverty {.tabset}
+
+The maps below show the percent of people and families in poverty by county, census tract, and block group for the six localities in the health district/planning district.
+
+### Localities
+
+```{r cnty}
+pal <- colorBin(viridis_pal(option = "C")(10), domain = pov_blkgp_sf$percent)
+
+leaflet() %>% 
+  leaflet(width = "100%") %>%
+  addProviderTiles("CartoDB.Positron") %>% 
+  addPolygons(data = pov_county_sf,
+              fillColor = ~pal(percent),
+              weight = 1,
+              opacity = 1,
+              color = "white", 
+              fillOpacity = 0.6,
+              smoothFactor = 0.3,
+              highlight = highlightOptions(
+                weight = 1, fillOpacity = 0.8, bringToFront = T),
+              popup = paste0("Percent below Poverty: ", pov_county_sf$percent, "%", "<br>",
+                             "County: ", pov_county_sf$name)) %>% 
+  addLegend("bottomright", pal = pal, values = pov_county_sf$percent, 
+            title = "Percent below Poverty", opacity = 0.7)
+```
+
+### Census Tracts
+
+```{r tract}
+leaflet() %>% 
+  leaflet(width = "100%") %>%
+  addProviderTiles("CartoDB.Positron") %>% 
+  addPolygons(data = pov_tract_sf,
+              fillColor = ~pal(percent),
+              weight = 1,
+              opacity = 1,
+              color = "white", 
+              fillOpacity = 0.6,
+              smoothFactor = 0.3,
+              highlight = highlightOptions(
+                weight = 1, fillOpacity = 0.8, bringToFront = T),
+              popup = paste0("Percent below Poverty: ", pov_tract_sf$percent, "%", "<br>",
+                             "Name of Area: ", pov_tract_sf$tractnames, "<br>",
+                             "Census Tract: ", pov_tract_sf$GEOID)) %>% 
+  addLegend("bottomright", pal = pal, values = pov_tract_sf$percent, 
+            title = "Percent below Poverty", opacity = 0.7)
+```
+
+### Census Block Groups 
+
+```{r blkgp}
+leaflet() %>% 
+  leaflet(width = "100%") %>%
+  addProviderTiles("CartoDB.Positron") %>% 
+  addPolygons(data = pov_blkgp_sf,
+              fillColor = ~pal(percent),
+              weight = 1,
+              opacity = 1,
+              color = "white", 
+              fillOpacity = 0.6,
+              smoothFactor = 0.3,
+              highlight = highlightOptions(
+                weight = 1, fillOpacity = 0.8, bringToFront = T),
+              popup = paste0("Percent below Poverty: ", pov_blkgp_sf$percent, "%", "<br>",
+                             "Census Block Group: ", pov_blkgp_sf$GEOID)) %>% 
+  addLegend("bottomright", pal = pal, values = pov_blkgp_sf$percent, 
+            title = "Percent below Poverty", opacity = 0.7)
+
+```
+
+
+
+
+
