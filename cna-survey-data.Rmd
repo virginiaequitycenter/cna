@@ -1,0 +1,472 @@
+---
+title: "CNA Survey Response Data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
+                      dev = "png")
+
+# Load Packages ----
+library(here)
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(lubridate)
+library(scales)
+
+# Read in Survey Data ----
+data_all <- read_csv("cna_data_all.csv")
+
+# # Network2Work
+# n2w_fy_23_24 <- read_csv("Network2Work/data/survey_23_24_pdc.csv")
+# 
+# # United Way
+# uw_fy_24 <- read_csv("UnitedWay/data/CE_FY24_CNA.csv") %>% 
+#   clean_names()
+# # Filter for planning district only: Albemarle, Charlottesville, Fluvanna, Greene,  Louisa, Nelson
+# uw_fy_24 <- uw_fy_24 %>% 
+#   filter(locality %in% c("Albemarle", "Charlottesville", "Fluvanna", "Greene", "Louisa", "Nelson"))
+```
+
+```{r, fig.width=8}
+# Locality ----
+locality <- data_all %>% filter(survey_question == "Locality")
+title <- locality$survey_question[1]
+
+locality %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+locality %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+```
+
+```{r, fig.width=8}
+# Age ----
+age <- data_all %>% filter(survey_question == "Age")
+title <- age$survey_question[1]
+
+age %>% 
+  mutate(data_point = factor(data_point, levels= c("18", "Under 19", "19-24", "25-39", "40-54", "25-54", "55-59", "60+"))) %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+age %>% 
+  mutate(data_point = factor(data_point, levels= c("18", "Under 19", "19-24", "25-39", "40-54", "25-54", "55-59", "60+"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+```
+
+```{r, fig.width=9}
+# Race ----
+race <- data_all %>% filter(survey_question == "Race")
+title <- race$survey_question[1]
+
+race %>% 
+  mutate(data_point = factor(data_point, levels = c("American Indian/Alaska Native","Asian","Black", "Hawaiian/Pacific Islander", "Multiracial","White","Prefer not to answer"),
+                       labels = c("American Indian/Alaska Native","Asian","Black","Hawaiian/Pacific Islander", "Multiracial","White","Prefer not to answer"))) %>%
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+race %>% 
+  mutate(data_point = factor(data_point, levels = c("American Indian/Alaska Native","Asian","Black", "Hawaiian/Pacific Islander", "Multiracial","White","Prefer not to answer"),
+                       labels = c("American Indian/Alaska Native","Asian","Black","Hawaiian/Pacific Islander", "Multiracial","White","Prefer not to answer"))) %>%
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+```
+
+```{r}
+# Ethnicity ----
+ethnicity <- data_all %>% filter(survey_question == "Ethnicity")
+title <- ethnicity$survey_question[1]
+
+ethnicity %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+ethnicity %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+```
+
+```{r}
+# Gender ----
+gender <- data_all %>% filter(survey_question == "Gender")
+title <- gender$survey_question[1]
+
+gender %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+gender %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+```
+
+```{r, fig.width=9.5}
+# Education Level ----
+edu_attain <- data_all %>% filter(survey_question == "Education Level")
+title <- edu_attain$survey_question[1]
+
+edu_attain %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+edu_attain %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+```
+
+```{r}
+# Military Service ----
+military <- data_all %>% filter(survey_question == "Military Service")
+title <- military$survey_question[1]
+
+military %>% 
+  mutate(data_point = factor(data_point, levels = c("None", "Veteran of the U.S. military", "Active duty member of the U.S. military"))) %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+military %>% 
+  mutate(data_point = factor(data_point, levels = c("None", "Veteran of the U.S. military", "Active duty member of the U.S. military"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+```
