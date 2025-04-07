@@ -575,38 +575,111 @@ housing_stable <- rbind(housing_stable, housing_stable_all)
 
 
 # Transportation ----
-# N2W and UW separate
+# N2W and UW separate - can combine after all
+# N2W transportation
 transportation_n2w <- n2w_fy_23_24 %>%
-  count(transportation_need) %>%
+  select(transportation_need, transportation_validlicense, transportation_caraccess, transportation_carinspection, transportation_carregistration, 	
+         transportation_reliableride, transportation_walkweather, 	
+         transportation_busline) %>% 
+  mutate(tranport_needs = case_when(is.na(transportation_need) ~ NA,
+                                    str_detect(transportation_validlicense, "No") ~ "Does not have driver’s license",
+                                    transportation_need == "Yes" | transportation_need == "No- I plan to walk" | transportation_reliableride == "Somewhat reliable-I may need help with a backup transportation plan" ~ "Does not have reliable transportation",
+                                    transportation_need == "No-I plan to take my own vehicle" & transportation_validlicense == "Yes" & transportation_caraccess == "Yes" & str_detect(transportation_carinspection, "Yes") & transportation_carregistration == "Yes, registration is up to date" ~ "None")) %>% 
+  
+  count(tranport_needs) %>%
   arrange(desc(n)) %>% 
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
          survey_question = "Transportation needs",
          survey = "Network2Work") %>% 
-  rename(data_point = transportation_need,
+  rename(data_point = tranport_needs,
          survey_count = n)
 
-transport_lic_n2w <- n2w_fy_23_24 %>%
-  count(transportation_validlicense) %>%
-  arrange(desc(n)) %>% 
-  mutate(survey_total = sum(n),
-         survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Transportation - Driver's license",
-         survey = "Network2Work") %>% 
-  rename(data_point = transportation_validlicense,
-         survey_count = n)
+# United Way - transportation needs ----
+# transportation_uw <- uw_fy_24 %>%
+#   count(group_family_transportation_needs) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(survey_total = sum(n),
+#          survey_percent = round((n/survey_total) * 100, 2),
+#          survey_question = "Transportation needs",
+#          survey = "United Way") %>% 
+#   rename(data_point = group_family_transportation_needs,
+#          survey_count = n)
 
-transportation_uw <- uw_fy_24 %>%
-  count(group_family_transportation_needs) %>%
-  arrange(desc(n)) %>% 
+transport_select_uw <- uw_fy_24 %>%
+  select(group_family_transportation_needs) %>% 
+  mutate(work_hours = case_when(str_detect(group_family_transportation_needs, "work longer hours than the typical school day") ~ "Works longer hours than school day"),
+         drivers_license = case_when(str_detect(group_family_transportation_needs, "do not have a driver’s license") ~ "Does not have driver’s license"),
+         reliable_transport = case_when(str_detect(group_family_transportation_needs, "do not have reliable transportation") ~ "Does not have reliable transportation"),
+         transport_barrier = case_when(str_detect(group_family_transportation_needs, "Transportation is a barrier") ~ "Transportation is a barrier to getting child to and from school"),
+         none = case_when(group_family_transportation_needs == "None of the above" ~ "None"),
+         na = case_when(is.na(group_family_transportation_needs) ~ "NA"))
+
+work_hours_uw <- transport_select_uw %>% 
+  count(work_hours, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
          survey_question = "Transportation needs",
          survey = "United Way") %>% 
-  rename(data_point = group_family_transportation_needs,
-         survey_count = n)
+  rename(data_point = work_hours,
+         survey_count = n) %>% 
+  na.omit()
 
-transportation <- rbind(transportation_n2w, transport_lic_n2w, transportation_uw) %>%
+drivers_license_uw <- transport_select_uw %>% 
+  count(drivers_license, sort = TRUE) %>%
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Transportation needs",
+         survey = "United Way") %>% 
+  rename(data_point = drivers_license,
+         survey_count = n) %>% 
+  na.omit()
+
+reliable_transport_uw <- transport_select_uw %>% 
+  count(reliable_transport, sort = TRUE) %>%
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Transportation needs",
+         survey = "United Way") %>% 
+  rename(data_point = reliable_transport,
+         survey_count = n) %>% 
+  na.omit()
+
+transport_barrier_uw <- transport_select_uw %>% 
+  count(transport_barrier, sort = TRUE) %>%
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Transportation needs",
+         survey = "United Way") %>% 
+  rename(data_point = transport_barrier,
+         survey_count = n) %>% 
+  na.omit()
+
+none_transp_uw <- transport_select_uw %>% 
+  count(none, sort = TRUE) %>%
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Transportation needs",
+         survey = "United Way") %>% 
+  rename(data_point = none,
+         survey_count = n) %>% 
+  na.omit()
+
+na_transp_uw <-  transport_select_uw %>% 
+  count(na, sort = TRUE) %>%
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Transportation needs",
+         survey = "United Way") %>% 
+  rename(data_point = na,
+         survey_count = n) %>% 
+  na.omit()
+
+transportation_needs_uw <- rbind(work_hours_uw, drivers_license_uw, reliable_transport_uw, transport_barrier_uw, none_transp_uw, na_transp_uw) %>% 
+  mutate(data_point = case_when(data_point == "NA" ~ NA,
+                                .default = data_point))
+
+transportation <- rbind(transportation_n2w, transportation_needs_uw) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 

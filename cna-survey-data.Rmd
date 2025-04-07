@@ -858,6 +858,71 @@ stable_housing %>%
 ```
 
 ```{r}
+# Transportation needs ----
+transportation <- data_all %>% filter(survey_question == "Transportation needs")
+title <- transportation$survey_question[1]
+
+transportation %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+transportation %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
+  labs(title = paste0(title, " (as percent of survey responses)")) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+  
+
+```
+
+```{r}
 # Trouble paying rent and/or utils ----
 rent_utils <- data_all %>% filter(survey_question == "Trouble paying rent and/or utils")
 title <- rent_utils$survey_question[1]
