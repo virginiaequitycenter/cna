@@ -85,106 +85,65 @@ All,Gender,Male,344,1863,18.46
 All,Gender,NA,51,1863,2.74
 All,Gender,Other,2,1863,0.11
 All,Gender,Prefer not to disclose,2,1863,0.11
-Network2Work,Education Level,High School Graduate,217,441,49.21
-Network2Work,Education Level,GED,64,441,14.51
-Network2Work,Education Level,Did Not Complete High School,49,441,11.11
-Network2Work,Education Level,NA,47,441,10.66
-Network2Work,Education Level,Associate's Degree,31,441,7.03
-Network2Work,Education Level,Bachelor's Degree,24,441,5.44
-Network2Work,Education Level,Unsure--I was educated outside the U.S.,6,441,1.36
-Network2Work,Education Level,Advanced Degree,3,441,0.68
+Network2Work,Education Level,High School Graduate,217,435,49.89
+Network2Work,Education Level,GED,64,435,14.71
+Network2Work,Education Level,Did Not Complete High School,49,435,11.26
+Network2Work,Education Level,NA,47,435,10.8
+Network2Work,Education Level,Associate's Degree,31,435,7.13
+Network2Work,Education Level,Bachelor's Degree,24,435,5.52
+Network2Work,Education Level,Graduate Degree,3,435,0.69
 United Way,Education Level,High School Graduate,438,1422,30.8
 United Way,Education Level,Some College or Advanced Training,276,1422,19.41
 United Way,Education Level,Bachelor's Degree,203,1422,14.28
 United Way,Education Level,Did Not Complete High School,166,1422,11.67
-United Way,Education Level,Master's Degree,131,1422,9.21
+United Way,Education Level,Graduate Degree,162,1422,11.39
 United Way,Education Level,Associate's Degree,94,1422,6.61
 United Way,Education Level,GED,72,1422,5.06
-United Way,Education Level,Doctorate Degree,31,1422,2.18
 United Way,Education Level,NA,11,1422,0.77
-All,Education Level,High School Graduate,655,1863,35.16
-All,Education Level,Some College or Advanced Training,276,1863,14.81
-All,Education Level,Bachelor's Degree,227,1863,12.18
-All,Education Level,Did Not Complete High School,215,1863,11.54
-All,Education Level,GED,136,1863,7.3
-All,Education Level,Master's Degree,131,1863,7.03
-All,Education Level,Associate's Degree,125,1863,6.71
-All,Education Level,NA,58,1863,3.11
-All,Education Level,Doctorate Degree,31,1863,1.66
-All,Education Level,Unsure--I was educated outside the U.S.,6,1863,0.32
-All,Education Level,Advanced Degree,3,1863,0.16
+All,Education Level,High School Graduate,655,1857,35.27
+All,Education Level,Some College or Advanced Training,276,1857,14.86
+All,Education Level,Bachelor's Degree,227,1857,12.22
+All,Education Level,Did Not Complete High School,215,1857,11.58
+All,Education Level,Graduate Degree,165,1857,8.89
+All,Education Level,GED,136,1857,7.32
+All,Education Level,Associate's Degree,125,1857,6.73
+All,Education Level,NA,58,1857,3.12
 Network2Work,Military Service,None,400,441,90.7
 Network2Work,Military Service,NA,30,441,6.8
-Network2Work,Military Service,Veteran of the U.S. military,11,441,2.49
-United Way,Military Service,Active duty member of the U.S. military,24,1427,1.68
-United Way,Military Service,None,1329,1427,93.13
-United Way,Military Service,Veteran of the U.S. military,55,1427,3.85
-United Way,Military Service,NA,19,1427,1.33
-All,Military Service,None,1729,1868,92.56
-All,Military Service,Veteran of the U.S. military,66,1868,3.53
-All,Military Service,NA,49,1868,2.62
-All,Military Service,Active duty member of the U.S. military,24,1868,1.28
+Network2Work,Military Service,U.S. military service,11,441,2.49
+United Way,Military Service,None,1329,1422,93.46
+United Way,Military Service,U.S. military service,74,1422,5.2
+United Way,Military Service,NA,19,1422,1.34
+All,Military Service,None,1729,1863,92.81
+All,Military Service,U.S. military service,85,1863,4.56
+All,Military Service,NA,49,1863,2.63
 Network2Work,Count of children living in home,NA,176,441,39.91
 Network2Work,Count of children living in home,1,95,441,21.54
 Network2Work,Count of children living in home,2,64,441,14.51
-Network2Work,Count of children living in home,"None, my children aren't living with me",55,441,12.47
+Network2Work,Count of children living in home,0,55,441,12.47
 Network2Work,Count of children living in home,3,29,441,6.58
 Network2Work,Count of children living in home,4 or more,22,441,4.99
-United Way,Count of children living in home,2,523,1422,36.78
-United Way,Count of children living in home,3,337,1422,23.7
-United Way,Count of children living in home,1,296,1422,20.82
-United Way,Count of children living in home,4,159,1422,11.18
-United Way,Count of children living in home,5,61,1422,4.29
-United Way,Count of children living in home,6,18,1422,1.27
-United Way,Count of children living in home,7,9,1422,0.63
-United Way,Count of children living in home,0,4,1422,0.28
-United Way,Count of children living in home,8,3,1422,0.21
-United Way,Count of children living in home,2,3,1422,0.21
-United Way,Count of children living in home,3,2,1422,0.14
-United Way,Count of children living in home,2,2,1422,0.14
+United Way,Count of children living in home,2,528,1422,37.13
+United Way,Count of children living in home,3,339,1422,23.84
+United Way,Count of children living in home,1,297,1422,20.89
+United Way,Count of children living in home,4 or more,251,1422,17.65
+United Way,Count of children living in home,0,5,1422,0.35
 United Way,Count of children living in home,NA,2,1422,0.14
-United Way,Count of children living in home,10,1,1422,0.07
-United Way,Count of children living in home,1,1,1422,0.07
-United Way,Count of children living in home,Son is temporarily staying with grandma for coverage,1,1422,0.07
+All,Count of children living in home,2,592,1863,31.78
+All,Count of children living in home,1,392,1863,21.04
+All,Count of children living in home,3,368,1863,19.75
+All,Count of children living in home,4 or more,273,1863,14.65
+All,Count of children living in home,NA,178,1863,9.55
+All,Count of children living in home,0,60,1863,3.22
+Network2Work,Single Parent,Single parent/guardian,193,441,43.76
 Network2Work,Single Parent,NA,172,441,39
-Network2Work,Single Parent,Yes-I'm a single mom,152,441,34.47
 Network2Work,Single Parent,No,76,441,17.23
-Network2Work,Single Parent,Yes-I'm a single dad,41,441,9.3
-United Way,Single Parent,Married,587,1422,41.28
-United Way,Single Parent,Single parent/guardian,478,1422,33.61
-United Way,Single Parent,"Living together, not married",86,1422,6.05
-United Way,Single Parent,Divorced/Separated,46,1422,3.23
-United Way,Single Parent,Not married,43,1422,3.02
-United Way,Single Parent,"Not married, Living together, not married",26,1422,1.83
-United Way,Single Parent,"Not married, Single parent/guardian",26,1422,1.83
+United Way,Single Parent,No,802,1422,56.4
+United Way,Single Parent,Single parent/guardian,594,1422,41.77
 United Way,Single Parent,NA,26,1422,1.83
-United Way,Single Parent,"Divorced/Separated, Single parent/guardian",22,1422,1.55
-United Way,Single Parent,"Single parent/guardian, No contact with one/both parents",21,1422,1.48
-United Way,Single Parent,"Single parent/guardian, Divorced/Separated",17,1422,1.2
-United Way,Single Parent,"Single parent/guardian, Not married",16,1422,1.13
-United Way,Single Parent,No contact with one/both parents,7,1422,0.49
-United Way,Single Parent,"Married, No contact with one/both parents",3,1422,0.21
-United Way,Single Parent,"Married, Single parent/guardian",2,1422,0.14
-United Way,Single Parent,"No contact with one/both parents, Single parent/guardian",2,1422,0.14
-United Way,Single Parent,"Not married, Single parent/guardian, Living together, not married",2,1422,0.14
-United Way,Single Parent,"Single parent/guardian, Living together, not married",2,1422,0.14
-United Way,Single Parent,"Divorced/Separated, Married",1,1422,0.07
-United Way,Single Parent,"Divorced/Separated, No contact with one/both parents, Single parent/guardian",1,1422,0.07
-United Way,Single Parent,"Living together, not married, Single parent/guardian",1,1422,0.07
-United Way,Single Parent,"No contact with one/both parents, Married",1,1422,0.07
-United Way,Single Parent,"Not married, Divorced/Separated, Single parent/guardian",1,1422,0.07
-United Way,Single Parent,"Not married, Married",1,1422,0.07
-United Way,Single Parent,"Not married, No contact with one/both parents",1,1422,0.07
-United Way,Single Parent,"Single parent/guardian, No contact with one/both parents, Not married",1,1422,0.07
-United Way,Single Parent,"Single parent/guardian, Not married, No contact with one/both parents",1,1422,0.07
-United Way,Single Parent,"Single parent/guardian, Not married, No contact with one/both parents, Living together, not married",1,1422,0.07
-Network2Work,Primary Language,NA,433,441,98.19
-Network2Work,Primary Language,Dari,2,441,0.45
-Network2Work,Primary Language,Pashtu,2,441,0.45
-Network2Work,Primary Language,Arabic,1,441,0.23
-Network2Work,Primary Language,Farsi,1,441,0.23
-Network2Work,Primary Language,Spanish,1,441,0.23
-Network2Work,Primary Language,Swahili,1,441,0.23
+All,Single Parent,No,878,1863,47.13
+All,Single Parent,Single parent/guardian,787,1863,42.24
+All,Single Parent,NA,198,1863,10.63
 United Way,Primary Language,English,1016,1422,71.45
 United Way,Primary Language,Spanish,210,1422,14.77
 United Way,Primary Language,Other,57,1422,4.01
@@ -198,220 +157,32 @@ United Way,Primary Language,American Sign Language,1,1422,0.07
 Network2Work,Employment Status,Yes,237,441,53.74
 Network2Work,Employment Status,No,183,441,41.5
 Network2Work,Employment Status,NA,21,441,4.76
-United Way,Employment Status,Employed - Full Time,704,1422,49.51
-United Way,Employment Status,Unemployed,248,1422,17.44
-United Way,Employment Status,Employed - Part Time,203,1422,14.28
-United Way,Employment Status,Stay at Home Parent,64,1422,4.5
-United Way,Employment Status,Seeking Employment,17,1422,1.2
-United Way,Employment Status,Employed - Full Time & Training,16,1422,1.13
-United Way,Employment Status,"Unemployed, Seeking Employment",16,1422,1.13
-United Way,Employment Status,Employed - Seasonal,15,1422,1.05
-United Way,Employment Status,Disabled,13,1422,0.91
-United Way,Employment Status,NA,9,1422,0.63
-United Way,Employment Status,Employed - Part Time & Training,8,1422,0.56
-United Way,Employment Status,Training or School,8,1422,0.56
-United Way,Employment Status,"Employed - Full Time, Employed - Part Time",7,1422,0.49
-United Way,Employment Status,"Seeking Employment, Stay at Home Parent",7,1422,0.49
-United Way,Employment Status,"Unemployed, Stay at Home Parent",7,1422,0.49
-United Way,Employment Status,"Employed - Part Time, Training or School",5,1422,0.35
-United Way,Employment Status,Retired,4,1422,0.28
-United Way,Employment Status,"Stay at Home Parent, Training or School",4,1422,0.28
-United Way,Employment Status,"Training or School, Unemployed",4,1422,0.28
-United Way,Employment Status,"Unemployed, Stay at Home Parent, Seeking Employment",4,1422,0.28
-United Way,Employment Status,"Employed - Part Time & Training, Seeking Employment, Stay at Home Parent",3,1422,0.21
-United Way,Employment Status,"Employed - Part Time, Employed - Full Time",3,1422,0.21
-United Way,Employment Status,"Employed - Part Time, Stay at Home Parent",3,1422,0.21
-United Way,Employment Status,"Stay at Home Parent, Disabled",3,1422,0.21
-United Way,Employment Status,"Stay at Home Parent, Employed - Part Time",3,1422,0.21
-United Way,Employment Status,"Stay at Home Parent, Seeking Employment",3,1422,0.21
-United Way,Employment Status,"Stay at Home Parent, Unemployed",3,1422,0.21
-United Way,Employment Status,"Training or School, Seeking Employment",3,1422,0.21
-United Way,Employment Status,"Unemployed, Seeking Employment, Stay at Home Parent",3,1422,0.21
-United Way,Employment Status,"Disabled, Employed - Part Time & Training, Training or School",2,1422,0.14
-United Way,Employment Status,"Employed - Full Time, Employed - Full Time & Training",2,1422,0.14
-United Way,Employment Status,"Employed - Full Time, Employed - Seasonal",2,1422,0.14
-United Way,Employment Status,"Employed - Full Time, Stay at Home Parent",2,1422,0.14
-United Way,Employment Status,"Employed - Full Time, Training or School",2,1422,0.14
-United Way,Employment Status,"Training or School, Stay at Home Parent",2,1422,0.14
-United Way,Employment Status,"Unemployed, Disabled, Seeking Employment, Training or School",2,1422,0.14
-United Way,Employment Status,"Unemployed, Employed - Part Time",2,1422,0.14
-United Way,Employment Status,"Unemployed, Training or School",2,1422,0.14
-United Way,Employment Status,"Unemployed, Training or School, Seeking Employment, Stay at Home Parent",2,1422,0.14
-United Way,Employment Status,"Employed - Full Time & Training, Employed - Full Time",1,1422,0.07
-United Way,Employment Status,"Employed - Full Time, Disabled",1,1422,0.07
-United Way,Employment Status,"Employed - Part Time, Disabled",1,1422,0.07
-United Way,Employment Status,"Employed - Part Time, Retired",1,1422,0.07
-United Way,Employment Status,"Employed - Seasonal, Employed - Full Time",1,1422,0.07
-United Way,Employment Status,"Seeking Employment, Stay at Home Parent, Unemployed",1,1422,0.07
-United Way,Employment Status,"Seeking Employment, Unemployed",1,1422,0.07
-United Way,Employment Status,"Seeking Employment, Unemployed, Training or School",1,1422,0.07
-United Way,Employment Status,"Training or School, Employed - Full Time & Training",1,1422,0.07
-United Way,Employment Status,"Training or School, Employed - Part Time",1,1422,0.07
-United Way,Employment Status,"Unemployed, Disabled",1,1422,0.07
-United Way,Employment Status,"Unemployed, Stay at Home Parent, Training or School",1,1422,0.07
+United Way,Employment Status,Yes,989,1422,69.55
+United Way,Employment Status,No,423,1422,29.75
+United Way,Employment Status,NA,10,1422,0.7
+All,Employment Status,Yes,1226,1863,65.81
+All,Employment Status,No,606,1863,32.53
+All,Employment Status,NA,31,1863,1.66
 Network2Work,Public Benefits,Yes,225,441,51.02
 Network2Work,Public Benefits,No,190,441,43.08
 Network2Work,Public Benefits,NA,26,441,5.9
-United Way,Public Benefits,None,549,1422,38.61
-United Way,Public Benefits,SNAP,203,1422,14.28
-United Way,Public Benefits,"SNAP, WIC",155,1422,10.9
-United Way,Public Benefits,WIC,99,1422,6.96
-United Way,Public Benefits,Other,63,1422,4.43
-United Way,Public Benefits,"SNAP, Child Care Subsidy",33,1422,2.32
-United Way,Public Benefits,"SNAP, Child Care Subsidy, WIC",29,1422,2.04
-United Way,Public Benefits,"WIC, Other",25,1422,1.76
-United Way,Public Benefits,Child Care Subsidy,23,1422,1.62
-United Way,Public Benefits,"TANF, SNAP",21,1422,1.48
-United Way,Public Benefits,"SNAP, TANF",20,1422,1.41
-United Way,Public Benefits,"WIC, SNAP",20,1422,1.41
-United Way,Public Benefits,"SNAP, SSI",16,1422,1.13
+United Way,Public Benefits,Yes,857,1422,60.27
+United Way,Public Benefits,No,549,1422,38.61
 United Way,Public Benefits,NA,16,1422,1.13
-United Way,Public Benefits,"SNAP, Other",14,1422,0.98
-United Way,Public Benefits,"TANF, SNAP, WIC",10,1422,0.7
-United Way,Public Benefits,"WIC, SNAP, TANF",9,1422,0.63
-United Way,Public Benefits,"TANF, SNAP, Child Care Subsidy",8,1422,0.56
-United Way,Public Benefits,"WIC, SSI",8,1422,0.56
-United Way,Public Benefits,"Child Care Subsidy, WIC",7,1422,0.49
-United Way,Public Benefits,"None, Other",7,1422,0.49
-United Way,Public Benefits,"WIC, Child Care Subsidy",7,1422,0.49
-United Way,Public Benefits,"SNAP, WIC, SSI",6,1422,0.42
-United Way,Public Benefits,"TANF, SNAP, VA View, WIC",6,1422,0.42
-United Way,Public Benefits,TANF,5,1422,0.35
-United Way,Public Benefits,"Child Care Subsidy, SNAP",4,1422,0.28
-United Way,Public Benefits,"SNAP, WIC, Child Care Subsidy",4,1422,0.28
-United Way,Public Benefits,SSI,4,1422,0.28
-United Way,Public Benefits,"Child Care Subsidy, WIC, Other",3,1422,0.21
-United Way,Public Benefits,"SNAP, Child Care Subsidy, WIC, SSI",3,1422,0.21
-United Way,Public Benefits,"SNAP, None",3,1422,0.21
-United Way,Public Benefits,"SSI, SNAP",3,1422,0.21
-United Way,Public Benefits,"Child Care Subsidy, Other",2,1422,0.14
-United Way,Public Benefits,"SNAP, Child Care Subsidy, SSI",2,1422,0.14
-United Way,Public Benefits,"SNAP, SSI, TANF",2,1422,0.14
-United Way,Public Benefits,"TANF, SNAP, Child Care Subsidy, VA View",2,1422,0.14
-United Way,Public Benefits,"TANF, SNAP, SSI, WIC, Child Care Subsidy",2,1422,0.14
-United Way,Public Benefits,"TANF, SNAP, VA View",2,1422,0.14
-United Way,Public Benefits,"TANF, SNAP, WIC, SSI",2,1422,0.14
-United Way,Public Benefits,"Child Care Subsidy, SNAP, TANF, VA View",1,1422,0.07
-United Way,Public Benefits,"Child Care Subsidy, VA View, SNAP",1,1422,0.07
-United Way,Public Benefits,"None, SSI",1,1422,0.07
-United Way,Public Benefits,"None, WIC",1,1422,0.07
-United Way,Public Benefits,"Other, Child Care Subsidy",1,1422,0.07
-United Way,Public Benefits,"SNAP, Child Care Subsidy, Other",1,1422,0.07
-United Way,Public Benefits,"SNAP, Child Care Subsidy, WIC, Other",1,1422,0.07
-United Way,Public Benefits,"SNAP, TANF, VA View",1,1422,0.07
-United Way,Public Benefits,"SNAP, TANF, WIC",1,1422,0.07
-United Way,Public Benefits,"SNAP, WIC, Child Care Subsidy, TANF",1,1422,0.07
-United Way,Public Benefits,"SNAP, WIC, Other",1,1422,0.07
-United Way,Public Benefits,"SNAP, WIC, Other, Child Care Subsidy",1,1422,0.07
-United Way,Public Benefits,"SNAP, WIC, TANF",1,1422,0.07
-United Way,Public Benefits,"SSI, WIC",1,1422,0.07
-United Way,Public Benefits,"TANF, Child Care Subsidy, SSI",1,1422,0.07
-United Way,Public Benefits,"TANF, Other",1,1422,0.07
-United Way,Public Benefits,"TANF, SNAP, SSI",1,1422,0.07
-United Way,Public Benefits,"TANF, SNAP, SSI, WIC",1,1422,0.07
-United Way,Public Benefits,"TANF, SNAP, VA View, WIC, Child Care Subsidy",1,1422,0.07
-United Way,Public Benefits,"TANF, SNAP, WIC, Child Care Subsidy",1,1422,0.07
-United Way,Public Benefits,"TANF, WIC",1,1422,0.07
-United Way,Public Benefits,"TANF, WIC, Child Care Subsidy",1,1422,0.07
-United Way,Public Benefits,"WIC, Other, Child Care Subsidy",1,1422,0.07
-United Way,Public Benefits,"WIC, SNAP, Other",1,1422,0.07
-United Way,Public Benefits,"WIC, TANF, SNAP",1,1422,0.07
-Network2Work,Stable Housing,NA,334,441,75.74
-Network2Work,Stable Housing,Stable-I have no concerns about having to leave,49,441,11.11
-Network2Work,Stable Housing,Unstable-I must find another place to live in the  next 3 months,33,441,7.48
-Network2Work,Stable Housing,Unstable-I need to find a place to live in the next month,13,441,2.95
-Network2Work,Stable Housing,Unstable-I need to find a place to live in the next 14 days or sooner,12,441,2.72
-Network2Work,Stable Housing - Type,Rent-I am on the lease,229,441,51.93
-Network2Work,Stable Housing - Type,Neither-I live with family or friends and I AM NOT on the lease,91,441,20.63
-Network2Work,Stable Housing - Type,Neither-I am staying in an emergency shelter (like the Salvation Army or PACEM),40,441,9.07
-Network2Work,Stable Housing - Type,NA,30,441,6.8
-Network2Work,Stable Housing - Type,Own-I pay a mortgage,26,441,5.9
-Network2Work,Stable Housing - Type,Neither-I jump from couch to couch,13,441,2.95
-Network2Work,Stable Housing - Type,Neither-I am living in a hotel,7,441,1.59
-Network2Work,Stable Housing - Type,Neither-I am living in a place not meant for housing (like a car or a tent or outside),5,441,1.13
-United Way,Stable Housing,None of the above,417,1422,29.32
-United Way,Stable Housing,"None of these, None of the above",405,1422,28.48
-United Way,Stable Housing,None of these,209,1422,14.7
-United Way,Stable Housing,We have moved more than twice in 3 years,78,1422,5.49
-United Way,Stable Housing,We share our living space with other person(s),51,1422,3.59
-United Way,Stable Housing,"None of these, We share our living space with other person(s)",27,1422,1.9
-United Way,Stable Housing,We are currently living in temporary/transitional housing,23,1422,1.62
+All,Public Benefits,Yes,1082,1863,58.08
+All,Public Benefits,No,739,1863,39.67
+All,Public Benefits,NA,42,1863,2.25
+Network2Work,Stable Housing,Stable,300,441,68.03
+Network2Work,Stable Housing,Unstable,111,441,25.17
+Network2Work,Stable Housing,NA,30,441,6.8
+United Way,Stable Housing,Stable,1123,1422,78.97
+United Way,Stable Housing,Prior instability/movement,188,1422,13.22
+United Way,Stable Housing,Unstable,92,1422,6.47
 United Way,Stable Housing,NA,19,1422,1.34
-United Way,Stable Housing,We have moved twice or more in 1 year,14,1422,0.98
-United Way,Stable Housing,"We have moved 2 or more times in 1 year, We have moved more than twice in 3 years",13,1422,0.91
-United Way,Stable Housing,Other,12,1422,0.84
-United Way,Stable Housing,"None of these, We have moved more than twice in 3 years",10,1422,0.7
-United Way,Stable Housing,We have moved 2 or more times in 1 year,10,1422,0.7
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved 2 or more times in 1 year",10,1422,0.7
-United Way,Stable Housing,We are currently experiencing homelessness,6,1422,0.42
-United Way,Stable Housing,"We are currently experiencing homelessness, We are currently living in temporary/transitional housing",6,1422,0.42
-United Way,Stable Housing,"We have lived in a campground/motel/shelter, We have moved twice or more in 1 year, We live/have lived in a campground/motel/shelter",5,1422,0.35
-United Way,Stable Housing,"We have moved 2 or more times in 1 year, None of the above",5,1422,0.35
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved twice or more in 1 year",4,1422,0.28
-United Way,Stable Housing,"None of these, We have moved more than twice in 3 years, None of the above",3,1422,0.21
-United Way,Stable Housing,"None of these, We have moved twice or more in 1 year",3,1422,0.21
-United Way,Stable Housing,"We are currently living in temporary/transitional housing, We have moved 2 or more times in 1 year, We have moved more than twice in 3 years",3,1422,0.21
-United Way,Stable Housing,"We are currently living in temporary/transitional housing, We share our living space with other person(s)",3,1422,0.21
-United Way,Stable Housing,"We have moved 2 or more times in 1 year, We have moved twice or more in 1 year, We have moved more than twice in 3 years, We live/have lived in a campground/motel/shelter, We live/have lived in a refugee camp",3,1422,0.21
-United Way,Stable Housing,"We share our living space with other person(s), We have moved more than twice in 3 years, We have moved twice or more in 1 year",3,1422,0.21
-United Way,Stable Housing,"None of these, We are currently living in temporary/transitional housing",2,1422,0.14
-United Way,Stable Housing,"None of these, We live/have lived in a refugee camp",2,1422,0.14
-United Way,Stable Housing,"None of these, We share our living space with other person(s), We have moved more than twice in 3 years",2,1422,0.14
-United Way,Stable Housing,"We are currently experiencing homelessness, We are currently living in temporary/transitional housing, We have moved 2 or more times in 1 year",2,1422,0.14
-United Way,Stable Housing,"We are currently experiencing homelessness, We are currently living in temporary/transitional housing, We have moved 2 or more times in 1 year, We have moved more than twice in 3 years, We share our living space with other person(s), We have moved twice or more in 1 year",2,1422,0.14
-United Way,Stable Housing,"We have lived in a campground/motel/shelter, None of the above",2,1422,0.14
-United Way,Stable Housing,"We have lived in a campground/motel/shelter, We have moved more than twice in 3 years",2,1422,0.14
-United Way,Stable Housing,"We have lived in a refugee camp, None of the above",2,1422,0.14
-United Way,Stable Housing,"We have moved 2 or more times in 1 year, We have lived in a campground/motel/shelter",2,1422,0.14
-United Way,Stable Housing,"We have moved 2 or more times in 1 year, We have lived in a campground/motel/shelter, We have moved more than twice in 3 years",2,1422,0.14
-United Way,Stable Housing,"We have moved more than twice in 3 years, Other",2,1422,0.14
-United Way,Stable Housing,"We have moved more than twice in 3 years, We are currently living in temporary/transitional housing",2,1422,0.14
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved 2 or more times in 1 year, We are currently living in temporary/transitional housing",2,1422,0.14
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved 2 or more times in 1 year, We have lived in a campground/motel/shelter",2,1422,0.14
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved 2 or more times in 1 year, We have lived in a campground/motel/shelter, We live/have lived in a campground/motel/shelter",2,1422,0.14
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved 2 or more times in 1 year, We have lived in a refugee camp",2,1422,0.14
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved twice or more in 1 year, We live/have lived in a refugee camp",2,1422,0.14
-United Way,Stable Housing,"We have moved twice or more in 1 year, We have moved more than twice in 3 years, We live/have lived in a campground/motel/shelter",2,1422,0.14
-United Way,Stable Housing,We live/have lived in a refugee camp,2,1422,0.14
-United Way,Stable Housing,"We share our living space with other person(s), We are currently living in temporary/transitional housing",2,1422,0.14
-United Way,Stable Housing,"We share our living space with other person(s), We have moved more than twice in 3 years",2,1422,0.14
-United Way,Stable Housing,"We share our living space with other person(s), We live/have lived in a campground/motel/shelter",2,1422,0.14
-United Way,Stable Housing,"None of these, Other",1,1422,0.07
-United Way,Stable Housing,"None of these, We are currently experiencing homelessness",1,1422,0.07
-United Way,Stable Housing,"None of these, We have moved 2 or more times in 1 year, None of the above",1,1422,0.07
-United Way,Stable Housing,"None of these, We have moved more than twice in 3 years, We have moved twice or more in 1 year, We live/have lived in a refugee camp, We live/have lived in a campground/motel/shelter",1,1422,0.07
-United Way,Stable Housing,"None of these, We share our living space with other person(s), Other",1,1422,0.07
-United Way,Stable Housing,"None of these, We share our living space with other person(s), We are currently living in temporary/transitional housing",1,1422,0.07
-United Way,Stable Housing,"We are currently experiencing homelessness, We are currently living in temporary/transitional housing, We have lived in a refugee camp",1,1422,0.07
-United Way,Stable Housing,"We are currently experiencing homelessness, We are currently living in temporary/transitional housing, We have moved more than twice in 3 years",1,1422,0.07
-United Way,Stable Housing,"We are currently experiencing homelessness, We are currently living in temporary/transitional housing, We live/have lived in a campground/motel/shelter",1,1422,0.07
-United Way,Stable Housing,"We are currently experiencing homelessness, We have lived in a campground/motel/shelter, None of the above",1,1422,0.07
-United Way,Stable Housing,"We are currently experiencing homelessness, We have moved more than twice in 3 years, We have moved twice or more in 1 year, We are currently living in temporary/transitional housing, We live/have lived in a refugee camp, We live/have lived in a campground/motel/shelter",1,1422,0.07
-United Way,Stable Housing,"We are currently experiencing homelessness, We have moved twice or more in 1 year, We have moved more than twice in 3 years, We are currently living in temporary/transitional housing, We live/have lived in a refugee camp, We live/have lived in a campground/motel/shelter, Other",1,1422,0.07
-United Way,Stable Housing,"We are currently living in temporary/transitional housing, We are currently experiencing homelessness, We have moved 2 or more times in 1 year",1,1422,0.07
-United Way,Stable Housing,"We are currently living in temporary/transitional housing, We live/have lived in a campground/motel/shelter, We have moved twice or more in 1 year, We have moved more than twice in 3 years",1,1422,0.07
-United Way,Stable Housing,We have lived in a campground/motel/shelter,1,1422,0.07
-United Way,Stable Housing,"We have lived in a campground/motel/shelter, We are currently living in temporary/transitional housing, We have moved 2 or more times in 1 year",1,1422,0.07
-United Way,Stable Housing,"We have lived in a campground/motel/shelter, We live/have lived in a campground/motel/shelter",1,1422,0.07
-United Way,Stable Housing,We have lived in a refugee camp,1,1422,0.07
-United Way,Stable Housing,"We have moved 2 or more times in 1 year, None of these, None of the above",1,1422,0.07
-United Way,Stable Housing,"We have moved 2 or more times in 1 year, We are currently living in temporary/transitional housing",1,1422,0.07
-United Way,Stable Housing,"We have moved more than twice in 3 years, We are currently experiencing homelessness",1,1422,0.07
-United Way,Stable Housing,"We have moved more than twice in 3 years, We are currently living in temporary/transitional housing, We have moved 2 or more times in 1 year",1,1422,0.07
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have lived in a campground/motel/shelter, We have moved 2 or more times in 1 year",1,1422,0.07
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved twice or more in 1 year, We are currently living in temporary/transitional housing",1,1422,0.07
-United Way,Stable Housing,"We have moved more than twice in 3 years, We have moved twice or more in 1 year, We live/have lived in a campground/motel/shelter",1,1422,0.07
-United Way,Stable Housing,"We have moved more than twice in 3 years, We share our living space with other person(s)",1,1422,0.07
-United Way,Stable Housing,"We have moved twice or more in 1 year, We have moved more than twice in 3 years, We share our living space with other person(s)",1,1422,0.07
-United Way,Stable Housing,"We have moved twice or more in 1 year, We live/have lived in a refugee camp",1,1422,0.07
-United Way,Stable Housing,We live/have lived in a campground/motel/shelter,1,1422,0.07
-United Way,Stable Housing,"We live/have lived in a campground/motel/shelter, We have moved more than twice in 3 years, We have moved twice or more in 1 year",1,1422,0.07
-United Way,Stable Housing,"We live/have lived in a campground/motel/shelter, We live/have lived in a refugee camp, We have moved twice or more in 1 year",1,1422,0.07
-United Way,Stable Housing,"We live/have lived in a campground/motel/shelter, We share our living space with other person(s), We have moved more than twice in 3 years",1,1422,0.07
-United Way,Stable Housing,"We live/have lived in a refugee camp, We live/have lived in a campground/motel/shelter, We have moved twice or more in 1 year, We have moved more than twice in 3 years",1,1422,0.07
-United Way,Stable Housing,"We share our living space with other person(s), We have moved more than twice in 3 years, We are currently living in temporary/transitional housing",1,1422,0.07
-United Way,Stable Housing,"We share our living space with other person(s), We have moved twice or more in 1 year",1,1422,0.07
-United Way,Stable Housing,"We share our living space with other person(s), We live/have lived in a refugee camp, We live/have lived in a campground/motel/shelter",1,1422,0.07
+All,Stable Housing,Stable,1423,1863,76.38
+All,Stable Housing,Unstable,203,1863,10.9
+All,Stable Housing,Prior instability/movement,188,1863,10.09
+All,Stable Housing,NA,49,1863,2.63
 Network2Work,Transportation needs,No-I plan to take my own vehicle,198,441,44.9
 Network2Work,Transportation needs,Yes,181,441,41.04
 Network2Work,Transportation needs,NA,23,441,5.22
@@ -509,17 +280,28 @@ United Way,Transportation needs,"Transportation is a barrier to me getting my ch
 United Way,Transportation needs,"Transportation is a barrier to my family getting my child to and from school, I/We do not have a driver’s license",1,1422,0.07
 United Way,Transportation needs,"Transportation is a barrier to my family getting my child to and from school, I/We do not have reliable transportation, I/We work longer hours than the typical school day (7:30-2:30)",1,1422,0.07
 United Way,Transportation needs,"Transportation is a barrier to my family getting my child to and from school, I/We work longer hours than the typical school day (7:30-2:30)",1,1422,0.07
-Network2Work,Incarceration history,NA,258,441,58.5
+Network2Work,Trouble paying rent and/or utils,NA,176,441,39.91
+Network2Work,Trouble paying rent and/or utils,Yes,137,441,31.07
+Network2Work,Trouble paying rent and/or utils,No,128,441,29.02
+United Way,Trouble paying rent and/or utils,No,1140,1422,80.17
+United Way,Trouble paying rent and/or utils,Yes,264,1422,18.57
+United Way,Trouble paying rent and/or utils,NA,18,1422,1.27
+All,Trouble paying rent and/or utils,No,1268,1863,68.06
+All,Trouble paying rent and/or utils,Yes,401,1863,21.52
+All,Trouble paying rent and/or utils,NA,194,1863,10.41
+Network2Work,Incarceration history,No,266,441,60.32
 Network2Work,Incarceration history,Yes,140,441,31.75
-Network2Work,Incarceration history,No,43,441,9.75
-United Way,Incarceration history,None of the above,519,1422,36.5
-United Way,Incarceration history,None of these,403,1422,28.34
-United Way,Incarceration history,"None of these, None of the above",373,1422,26.23
-United Way,Incarceration history,Parent(s)/guardian(s) has/have been incarcerated in the past,60,1422,4.22
-United Way,Incarceration history,Parent(s)/guardian(s) is/are currently incarcerated,29,1422,2.04
+Network2Work,Incarceration history,NA,35,441,7.94
+United Way,Incarceration history,No,1300,1422,91.42
+United Way,Incarceration history,Yes,101,1422,7.1
 United Way,Incarceration history,NA,21,1422,1.48
-United Way,Incarceration history,"None of these, Parent(s)/guardian(s) has/have been incarcerated in the past",7,1422,0.49
-United Way,Incarceration history,"Parent(s)/guardian(s) is/are currently incarcerated, Parent(s)/guardian(s) has/have been incarcerated in the past",4,1422,0.28
-United Way,Incarceration history,A household member has been incarcerated,3,1422,0.21
-United Way,Incarceration history,"None of these, A household member is currently incarcerated",2,1422,0.14
-United Way,Incarceration history,"None of these, Parent(s)/guardian(s) is/are currently incarcerated",1,1422,0.07
+All,Incarceration history,No,1566,1863,84.06
+All,Incarceration history,Yes,241,1863,12.94
+All,Incarceration history,NA,56,1863,3.01
+United Way,"Disability, Learning challenge, Health",Chronic health condition,130,1422,9.14
+United Way,"Disability, Learning challenge, Health",Disability,97,1422,6.82
+United Way,"Disability, Learning challenge, Health",Mental health concern,114,1422,8.02
+United Way,"Disability, Learning challenge, Health",Learning challenge,95,1422,6.68
+United Way,"Disability, Learning challenge, Health",Experiencing substance abuse,28,1422,1.97
+United Way,"Disability, Learning challenge, Health",None,1109,1422,77.99
+United Way,"Disability, Learning challenge, Health",NA,15,1422,1.05
