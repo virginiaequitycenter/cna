@@ -854,6 +854,66 @@ housing_rent_utils_all <- housing_rent_utils %>%
 
 housing_rent_utils <- rbind(housing_rent_utils, housing_rent_utils_all)
 
+# Childcare needs (N2W) ----
+childcare_find_n2w <- n2w_fy_23_24 %>%
+  mutate(fam_childcarefind = case_when(str_detect(fam_childcarefind, "No") ~ "No-I do not need help finding childcare",
+                                       .default = fam_childcarefind)) %>% 
+  count(fam_childcarefind) %>%
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Childcare needs",
+         survey = "Network2Work") %>% 
+  rename(data_point = fam_childcarefind,
+         survey_count = n)
+
+childcare_fund_n2w <- n2w_fy_23_24 %>%
+  mutate(fam_childcarefund = case_when(str_detect(fam_childcarefund, "No") ~ "No-I do not need help paying for childcare",
+                                       str_detect(fam_childcarefund, "Yes") ~ "Yes-I need help paying for childcare")) %>%
+  count(fam_childcarefund) %>%
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Childcare needs",
+         survey = "Network2Work") %>% 
+  rename(data_point = fam_childcarefund,
+         survey_count = n)
+
+afterschool_find_n2w <- n2w_fy_23_24 %>%
+  mutate(fam_afterschoolfind = case_when(str_detect(fam_afterschoolfind, "No") ~ "No-I do not need after-school or summer care",
+                                         str_detect(fam_afterschoolfind, "Yes") ~ "Yes-I need after-school or summer care")) %>%
+  count(fam_afterschoolfind) %>%
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Childcare needs",
+         survey = "Network2Work") %>% 
+  rename(data_point = fam_afterschoolfind,
+         survey_count = n)
+
+afterschool_fund_n2w <- n2w_fy_23_24 %>%
+  mutate(fam_afterschoolfund = case_when(str_detect(fam_afterschoolfund, "No") ~ "No-I do not need help paying for after-school or summer care",
+                                       str_detect(fam_afterschoolfund, "Yes") ~ "Yes-I need help paying for after-school and/or summer care")) %>%
+  count(fam_afterschoolfund) %>%
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Childcare needs",
+         survey = "Network2Work") %>% 
+  rename(data_point = fam_afterschoolfund,
+         survey_count = n)
+
+childcare_n2w <- rbind(childcare_find_n2w, childcare_fund_n2w, afterschool_find_n2w, afterschool_fund_n2w) %>%
+  mutate(data_point = case_when(data_point %in% c("No-I do not need after-school or summer care", "No-I do not need help finding childcare") ~ "No, I do not need childcare",
+                                data_point %in% c("No-I do not need help paying for childcare","No-I do not need help paying for after-school or summer care") ~ "No-I do not need help paying for childcare",
+                                .default = data_point)) %>% 
+  na.omit() %>% 
+  group_by(survey, survey_question, data_point) %>% 
+  summarise(survey_count = sum(survey_count),
+            survey_total = first(survey_total),
+            survey_percent = round((survey_count/survey_total) * 100, 2))
+
+
 # Combine tables ----
 data_all <- rbind(locality,
                   age,
@@ -864,6 +924,7 @@ data_all <- rbind(locality,
                   military,
                   child_count,
                   singleparent,
+                  childcare_n2w,
                   language,
                   employed,
                   benefits,
@@ -885,6 +946,7 @@ wb_sheets <- list("Demographics" = demographics_sheet,
                   "Military Service" = military,
                   "Children living in home" = child_count,
                   "Single Parent" = singleparent,
+                  "Childcare Needs" = childcare_n2w,
                   "Primary Language" = language,
                   "Employment Status" = employed,
                   "Public Benefits" = benefits,
