@@ -22,24 +22,20 @@ Network2Work,Age,19-24,70,441,15.87
 Network2Work,Age,55-59,27,441,6.12
 Network2Work,Age,NA,15,441,3.4
 Network2Work,Age,60+,8,441,1.81
-Network2Work,Age,18,5,441,1.13
+Network2Work,Age,18 and under,5,441,1.13
 United Way,Age,25-39,1064,1422,74.82
 United Way,Age,40-54,175,1422,12.31
 United Way,Age,19-24,130,1422,9.14
-United Way,Age,Under 19,25,1422,1.76
+United Way,Age,18 and under,25,1422,1.76
 United Way,Age,NA,16,1422,1.13
 United Way,Age,60+,9,1422,0.63
 United Way,Age,55-59,3,1422,0.21
-United Way,Age,25-54,1064,1422,74.82
-All,Age,25-54,1380,2927,47.15
-All,Age,25-39,1064,2927,36.35
-All,Age,19-24,200,2927,6.83
-All,Age,40-54,175,2927,5.98
-All,Age,NA,31,2927,1.06
-All,Age,55-59,30,2927,1.02
-All,Age,Under 19,25,2927,0.85
-All,Age,60+,17,2927,0.58
-All,Age,18,5,2927,0.17
+All,Age,25-54,1555,1863,83.47
+All,Age,19-24,200,1863,10.74
+All,Age,NA,31,1863,1.66
+All,Age,18 and under,30,1863,1.61
+All,Age,55-59,30,1863,1.61
+All,Age,60+,17,1863,0.91
 Network2Work,Race,Black,260,441,58.96
 Network2Work,Race,White,97,441,22
 Network2Work,Race,NA,44,441,9.98
@@ -117,11 +113,11 @@ United Way,Military Service,NA,19,1422,1.34
 All,Military Service,None,1729,1863,92.81
 All,Military Service,U.S. military service,85,1863,4.56
 All,Military Service,NA,49,1863,2.63
-Network2Work,Count of children living in home,NA,176,441,39.91
+Network2Work,Count of children living in home,0,208,441,47.17
 Network2Work,Count of children living in home,1,95,441,21.54
 Network2Work,Count of children living in home,2,64,441,14.51
-Network2Work,Count of children living in home,0,55,441,12.47
 Network2Work,Count of children living in home,3,29,441,6.58
+Network2Work,Count of children living in home,NA,23,441,5.22
 Network2Work,Count of children living in home,4 or more,22,441,4.99
 United Way,Count of children living in home,2,528,1422,37.13
 United Way,Count of children living in home,3,339,1422,23.84
@@ -133,8 +129,8 @@ All,Count of children living in home,2,592,1863,31.78
 All,Count of children living in home,1,392,1863,21.04
 All,Count of children living in home,3,368,1863,19.75
 All,Count of children living in home,4 or more,273,1863,14.65
-All,Count of children living in home,NA,178,1863,9.55
-All,Count of children living in home,0,60,1863,3.22
+All,Count of children living in home,0,213,1863,11.43
+All,Count of children living in home,NA,25,1863,1.34
 Network2Work,Single Parent,Single parent/guardian,193,441,43.76
 Network2Work,Single Parent,NA,172,441,39
 Network2Work,Single Parent,No,76,441,17.23
@@ -154,15 +150,15 @@ United Way,Primary Language,NA,16,1422,1.13
 United Way,Primary Language,Mandarin,8,1422,0.56
 United Way,Primary Language,Swahili,6,1422,0.42
 United Way,Primary Language,American Sign Language,1,1422,0.07
-Network2Work,Employment Status,Yes,237,441,53.74
-Network2Work,Employment Status,No,183,441,41.5
-Network2Work,Employment Status,NA,21,441,4.76
-United Way,Employment Status,Yes,989,1422,69.55
-United Way,Employment Status,No,423,1422,29.75
-United Way,Employment Status,NA,10,1422,0.7
-All,Employment Status,Yes,1226,1863,65.81
-All,Employment Status,No,606,1863,32.53
-All,Employment Status,NA,31,1863,1.66
+Network2Work,Employment Status (Currently Working),Yes,237,441,53.74
+Network2Work,Employment Status (Currently Working),No,183,441,41.5
+Network2Work,Employment Status (Currently Working),NA,21,441,4.76
+United Way,Employment Status (Currently Working),Yes,989,1422,69.55
+United Way,Employment Status (Currently Working),No,423,1422,29.75
+United Way,Employment Status (Currently Working),NA,10,1422,0.7
+All,Employment Status (Currently Working),Yes,1226,1863,65.81
+All,Employment Status (Currently Working),No,606,1863,32.53
+All,Employment Status (Currently Working),NA,31,1863,1.66
 Network2Work,Public Benefits,Yes,225,441,51.02
 Network2Work,Public Benefits,No,190,441,43.08
 Network2Work,Public Benefits,NA,26,441,5.9
@@ -176,12 +172,12 @@ Network2Work,Stable Housing,Stable,300,441,68.03
 Network2Work,Stable Housing,Unstable,111,441,25.17
 Network2Work,Stable Housing,NA,30,441,6.8
 United Way,Stable Housing,Stable,1123,1422,78.97
-United Way,Stable Housing,Prior instability/movement,188,1422,13.22
+United Way,Stable Housing,Prior instability and/or frequent movement,188,1422,13.22
 United Way,Stable Housing,Unstable,92,1422,6.47
 United Way,Stable Housing,NA,19,1422,1.34
 All,Stable Housing,Stable,1423,1863,76.38
 All,Stable Housing,Unstable,203,1863,10.9
-All,Stable Housing,Prior instability/movement,188,1863,10.09
+All,Stable Housing,Prior instability and/or frequent movement,188,1863,10.09
 All,Stable Housing,NA,49,1863,2.63
 Network2Work,Transportation needs,NA,149,441,33.79
 Network2Work,Transportation needs,Does not have driver’s license,120,441,27.21
@@ -211,10 +207,10 @@ United Way,Incarceration history,NA,21,1422,1.48
 All,Incarceration history,No,1566,1863,84.06
 All,Incarceration history,Yes,241,1863,12.94
 All,Incarceration history,NA,56,1863,3.01
-United Way,"Disability, Learning challenge, Health",Chronic health condition,130,1422,9.14
-United Way,"Disability, Learning challenge, Health",Disability,97,1422,6.82
-United Way,"Disability, Learning challenge, Health",Mental health concern,114,1422,8.02
-United Way,"Disability, Learning challenge, Health",Learning challenge,95,1422,6.68
-United Way,"Disability, Learning challenge, Health",Experiencing substance abuse,28,1422,1.97
-United Way,"Disability, Learning challenge, Health",None,1109,1422,77.99
-United Way,"Disability, Learning challenge, Health",NA,15,1422,1.05
+United Way,"Disability, Learning challenge, and Health Concerns",Chronic health condition,130,1422,9.14
+United Way,"Disability, Learning challenge, and Health Concerns",Disability,97,1422,6.82
+United Way,"Disability, Learning challenge, and Health Concerns",Mental health concern,114,1422,8.02
+United Way,"Disability, Learning challenge, and Health Concerns",Learning challenge,95,1422,6.68
+United Way,"Disability, Learning challenge, and Health Concerns",Experiencing substance abuse,28,1422,1.97
+United Way,"Disability, Learning challenge, and Health Concerns",None,1109,1422,77.99
+United Way,"Disability, Learning challenge, and Health Concerns",NA,15,1422,1.05

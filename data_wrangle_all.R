@@ -7,6 +7,7 @@ library(tidyverse)
 library(readxl)
 library(janitor)
 library(lubridate)
+require(openxlsx)
 
 # .........................................
 # Read in Survey Data ----
@@ -70,6 +71,8 @@ locality <- rbind(locality, local_all)
 
 # Age ----
 age_n2w <- n2w_fy_23_24 %>%
+  mutate(dem_age = case_when(dem_age == "18" ~ "18 and under",
+                             .default = dem_age)) %>% 
   count(dem_age) %>%
   arrange(desc(n)) %>% 
   mutate(survey_total = sum(n),
@@ -80,31 +83,24 @@ age_n2w <- n2w_fy_23_24 %>%
          survey_count = n)
 
 age_uw <- uw_fy_24 %>%
+  mutate(parent_age = case_when(parent_age == "under 19" ~ "18 and under",
+                                .default = parent_age)) %>% 
   count(parent_age) %>%
   arrange(desc(n)) %>% 
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
          survey_question = "Age",
          survey = "United Way",
-         parent_age = str_to_title(str_replace(parent_age, " - ", "-"))) %>% 
+         parent_age = str_replace(parent_age, " - ", "-")) %>% 
   rename(data_point = parent_age,
          survey_count = n)
-
-combine_age_group <- age_uw %>% 
-  filter(data_point %in% c("25-39", "25-39")) %>% 
-  mutate(data_point = case_when(data_point == "25-39" ~ "25-54",
-                                data_point == "40-54" ~ "25-54",
-                                .default = data_point)) %>% 
-  group_by(data_point, survey_total, survey_question, survey) %>% 
-  summarise(survey_count = sum(survey_count),
-            survey_percent = round((survey_count/survey_total) * 100, 2))
-
-age_uw <- rbind(age_uw, combine_age_group)
 
 age <- rbind(age_n2w, age_uw) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 age_all <- age %>% 
+  mutate(data_point = case_when(data_point %in% c("25-39", "40-54", "25-54") ~ "25-54",
+                                 .default = data_point)) %>% 
   group_by(survey_question, data_point) %>% 
   summarise(survey_count = sum(survey_count)) %>%
   arrange(desc(survey_count)) %>%
@@ -321,15 +317,17 @@ military <- rbind(military, military_all)
 
 # Number of Children in the home ----
 # Reduce categories to 4 or more
+# Includes N2W respondents with no children
 child_count_n2w <- n2w_fy_23_24 %>%
+  select(fam_parent, fam_numchildren) %>% 
+  mutate(fam_numchildren = case_when(fam_parent == "No" | fam_numchildren == "0" | fam_numchildren == "None, my children aren't living with me" ~ "0",
+                                     .default = fam_numchildren)) %>% 
   count(fam_numchildren) %>%
   arrange(desc(n)) %>% 
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
          survey_question = "Count of children living in home",
-         survey = "Network2Work",
-         fam_numchildren = case_when(fam_numchildren == "None, my children aren't living with me" ~ "0",
-                                     .default = fam_numchildren)) %>% 
+         survey = "Network2Work") %>% 
   rename(data_point = fam_numchildren,
          survey_count = n)
 
@@ -365,6 +363,7 @@ child_count <- rbind(child_count, child_count_all)
 
 
 # Single Parent ----
+# Only includes respondents with children (N2W)
 # Reduce/Combine responses to only single parent or not
 singleparent_n2w <- n2w_fy_23_24 %>%
   mutate(fam_singleparent = case_when(fam_singleparent %in% c("Yes-I'm a single mom", "Yes-I'm a single dad") ~ "Single parent/guardian",
@@ -436,7 +435,7 @@ employed_n2w <- n2w_fy_23_24 %>%
   arrange(desc(n)) %>% 
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Employment Status",
+         survey_question = "Employment Status (Currently Working)",
          survey = "Network2Work") %>% 
   rename(data_point = work_current,
          survey_count = n)
@@ -449,7 +448,7 @@ employed_uw <- uw_fy_24 %>%
   arrange(desc(n)) %>% 
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Employment Status",
+         survey_question = "Employment Status (Currently Working)",
          survey = "United Way") %>% 
   rename(data_point = group_what_is_the_primary_parent_guardians_employment_status_select_all_that_apply,
          survey_count = n)
@@ -548,7 +547,7 @@ housing_stable_uw <- uw_fy_24 %>%
                                             group_unstable_housing %in% c("None of the above", "None of these", "Other", "None of these, None of the above",
                                                                           "We share our living space with other person(s)", "None of these, We share our living space with other person(s)",
                                                                           "None of these, Other", "None of these, We share our living space with other person(s), Other") ~ "Stable",
-                                            str_detect(group_unstable_housing, "We have moved|have lived") ~ "Prior instability/movement",
+                                            str_detect(group_unstable_housing, "We have moved|have lived") ~ "Prior instability and/or frequent movement",
                                             .default = group_unstable_housing)) %>% 
   count(group_unstable_housing) %>%
   arrange(desc(n)) %>% 
@@ -575,8 +574,17 @@ housing_stable <- rbind(housing_stable, housing_stable_all)
 
 
 # Transportation ----
-# N2W and UW separate - can combine after all
+# N2W and UW separate - can combine some 
 # N2W transportation
+# "None" for N2W transportation needs derived from respondents with all of the following conditions:
+# transportation_need == "No-I plan to take my own vehicle" & 
+# transportation_validlicense == "Yes" & transportation_caraccess == "Yes" & 
+# str_detect(transportation_carinspection, "Yes") & transportation_carregistration == "Yes, registration is up to date"
+# For "Does not have reliable transportation" any of the following answers:                                 
+# transportation_need == "Yes" 
+# transportation_need == "No- I plan to walk" (All answers with this also stated they would not walk in the rain/bad weather, and would need transportation)
+# transportation_reliableride == "Somewhat reliable-I may need help with a backup transportation plan"
+
 transportation_n2w <- n2w_fy_23_24 %>%
   select(transportation_need, transportation_validlicense, transportation_caraccess, transportation_carinspection, transportation_carregistration, 	
          transportation_reliableride, transportation_walkweather, 	
@@ -595,17 +603,7 @@ transportation_n2w <- n2w_fy_23_24 %>%
   rename(data_point = tranport_needs,
          survey_count = n)
 
-# United Way - transportation needs ----
-# transportation_uw <- uw_fy_24 %>%
-#   count(group_family_transportation_needs) %>%
-#   arrange(desc(n)) %>% 
-#   mutate(survey_total = sum(n),
-#          survey_percent = round((n/survey_total) * 100, 2),
-#          survey_question = "Transportation needs",
-#          survey = "United Way") %>% 
-#   rename(data_point = group_family_transportation_needs,
-#          survey_count = n)
-
+# United Way - transportation needs
 transport_select_uw <- uw_fy_24 %>%
   select(group_family_transportation_needs) %>% 
   mutate(work_hours = case_when(str_detect(group_family_transportation_needs, "work longer hours than the typical school day") ~ "Works longer hours than school day"),
@@ -745,7 +743,7 @@ chronic_health_uw <- disability_mental_health_uw %>%
   count(chronic_health_condition, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Disability, Learning challenge, Health",
+         survey_question = "Disability, Learning challenge, and Health Concerns",
          survey = "United Way") %>% 
   rename(data_point = chronic_health_condition,
          survey_count = n) %>% 
@@ -755,7 +753,7 @@ disability_uw <- disability_mental_health_uw %>%
   count(disability, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Disability, Learning challenge, Health",
+         survey_question = "Disability, Learning challenge, and Health Concerns",
          survey = "United Way") %>% 
   rename(data_point = disability,
          survey_count = n) %>% 
@@ -765,7 +763,7 @@ learning_challenge_uw <- disability_mental_health_uw %>%
   count(learning_challenge, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Disability, Learning challenge, Health",
+         survey_question = "Disability, Learning challenge, and Health Concerns",
          survey = "United Way") %>% 
   rename(data_point = learning_challenge,
          survey_count = n) %>% 
@@ -775,7 +773,7 @@ mental_health_concern_uw <- disability_mental_health_uw %>%
   count(mental_health_concern, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Disability, Learning challenge, Health",
+         survey_question = "Disability, Learning challenge, and Health Concerns",
          survey = "United Way") %>% 
   rename(data_point = mental_health_concern,
          survey_count = n) %>% 
@@ -785,7 +783,7 @@ substance_abuse_uw <- disability_mental_health_uw %>%
   count(substance_abuse, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Disability, Learning challenge, Health",
+         survey_question = "Disability, Learning challenge, and Health Concerns",
          survey = "United Way") %>% 
   rename(data_point = substance_abuse,
          survey_count = n) %>% 
@@ -795,7 +793,7 @@ none_concern_uw <- disability_mental_health_uw %>%
   count(none, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Disability, Learning challenge, Health",
+         survey_question = "Disability, Learning challenge, and Health Concerns",
          survey = "United Way") %>% 
   rename(data_point = none,
          survey_count = n) %>% 
@@ -805,7 +803,7 @@ na_concern_uw <-  disability_mental_health_uw %>%
   count(na, sort = TRUE) %>%
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
-         survey_question = "Disability, Learning challenge, Health",
+         survey_question = "Disability, Learning challenge, and Health Concerns",
          survey = "United Way") %>% 
   rename(data_point = na,
          survey_count = n) %>% 
@@ -815,22 +813,18 @@ health_mental_concerns_uw <- rbind(chronic_health_uw, disability_uw, mental_heal
 
 # Behind on rent/utils ----
 housing_rentbehind_n2w <- n2w_fy_23_24 %>%
-  select(housing_rentbehind, housing_billselecgas, housing_billswatersewer) %>% 
-  mutate(housing_rent_utils = case_when(str_detect(housing_rentbehind, "Yes") | str_detect(housing_billselecgas, "Yes") | str_detect(housing_billswatersewer, "Yes") ~ "Yes",
-                                        str_detect(housing_rentbehind, "No") & str_detect(housing_billselecgas, "No") & str_detect(housing_billswatersewer, "No") ~ "No",
-                                        str_detect(housing_rentbehind, "No") & str_detect(housing_billselecgas, "No") & is.na(housing_billswatersewer) ~ "No",
-                                        str_detect(housing_rentbehind, "No") & is.na(housing_billselecgas) & str_detect(housing_billswatersewer, "No") ~ "No",
-                                        is.na(housing_rentbehind) & str_detect(housing_billselecgas, "No") & str_detect(housing_billswatersewer, "No") ~ "No",
-                                        is.na(housing_rentbehind) & str_detect(housing_billselecgas, "No") & is.na(housing_billswatersewer) ~ "No",
-                                        is.na(housing_rentbehind) & is.na(housing_billselecgas) & str_detect(housing_billswatersewer, "No") ~ "No",
-                                        str_detect(housing_rentbehind, "No") & is.na(housing_billselecgas) & is.na(housing_billswatersewer) ~ "No")) %>% 
-  count(housing_rent_utils) %>%
+  select(housing_rentbehind, housing_billselecgas, housing_billswatersewer) %>%
+  mutate(housing_rent_utils_combine = paste0(housing_rentbehind, "; ", housing_billselecgas, "; ", housing_billswatersewer),
+         behind_rent_utils = case_when(str_detect(housing_rent_utils_combine, "Yes") ~ "Yes",
+                                       housing_rent_utils_combine == "NA; NA; NA" ~ NA,
+                                       .default = "No")) %>% 
+  count(behind_rent_utils) %>%
   arrange(desc(n)) %>% 
   mutate(survey_total = sum(n),
          survey_percent = round((n/survey_total) * 100, 2),
          survey_question = "Trouble paying rent and/or utils",
          survey = "Network2Work") %>% 
-  rename(data_point = housing_rent_utils,
+  rename(data_point = behind_rent_utils,
          survey_count = n)
 
 group_housing_situation_uw <- uw_fy_24 %>%
@@ -879,5 +873,26 @@ data_all <- rbind(locality,
                   incarceration,
                   health_mental_concerns_uw)
 
+# Create CSV ----
 write_csv(data_all, "cna_data_all.csv")
+
+# Create Excel workbook ----
+demographics_sheet <- rbind(locality, age, race, ethnicity, gender)
+housing_sheet <- rbind(housing_stable, housing_rent_utils)
+
+wb_sheets <- list("Demographics" = demographics_sheet,
+                  "Education Level" = educ_level,
+                  "Military Service" = military,
+                  "Children living in home" = child_count,
+                  "Single Parent" = singleparent,
+                  "Primary Language" = language,
+                  "Employment Status" = employed,
+                  "Public Benefits" = benefits,
+                  "Housing" = housing_sheet,
+                  "Transportation needs" = transportation,
+                  "Incarceration" = incarceration,
+                  "Health" = health_mental_concerns_uw)
+
+write.xlsx(wb_sheets, file = "CNA_Survey_Data.xlsx", keepNA = TRUE)
+
 

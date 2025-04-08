@@ -58,7 +58,7 @@ locality %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 locality %>% 
@@ -72,7 +72,7 @@ locality %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -86,7 +86,7 @@ locality %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 ```
 
@@ -96,7 +96,7 @@ age <- data_all %>% filter(survey_question == "Age")
 title <- age$survey_question[1]
 
 age %>% 
-  mutate(data_point = factor(data_point, levels= c("18", "Under 19", "19-24", "25-39", "40-54", "25-54", "55-59", "60+"))) %>% 
+  mutate(data_point = factor(data_point, levels= c("18 and under", "19-24", "25-39", "40-54", "25-54", "55-59", "60+"))) %>% 
   ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
   geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
   geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
@@ -120,11 +120,11 @@ age %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 age %>% 
-  mutate(data_point = factor(data_point, levels= c("18", "Under 19", "19-24", "25-39", "40-54", "25-54", "55-59", "60+"))) %>% 
+  mutate(data_point = factor(data_point, levels= c("18 and under", "19-24", "25-39", "40-54", "25-54", "55-59", "60+"))) %>% 
   ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
   geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
   geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
@@ -135,7 +135,7 @@ age %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -149,7 +149,7 @@ age %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -185,7 +185,7 @@ race %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 race %>% 
@@ -201,7 +201,7 @@ race %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -215,7 +215,7 @@ race %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -249,7 +249,7 @@ ethnicity %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ethnicity %>% 
@@ -263,7 +263,7 @@ ethnicity %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -277,7 +277,7 @@ ethnicity %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 
@@ -312,7 +312,7 @@ gender %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 gender %>% 
@@ -326,7 +326,7 @@ gender %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -340,7 +340,7 @@ gender %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -375,7 +375,7 @@ edu_attain %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 edu_attain %>% 
@@ -390,7 +390,7 @@ edu_attain %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -404,7 +404,7 @@ edu_attain %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -439,7 +439,7 @@ military %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 military %>% 
@@ -454,7 +454,7 @@ military %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -468,7 +468,7 @@ military %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -502,7 +502,7 @@ children_home %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 children_home %>% 
@@ -516,7 +516,7 @@ children_home %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -530,7 +530,7 @@ children_home %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -564,7 +564,7 @@ single_parent %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 single_parent %>% 
@@ -578,7 +578,7 @@ single_parent %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -592,7 +592,7 @@ single_parent %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -627,7 +627,7 @@ language %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 language %>% 
@@ -642,7 +642,7 @@ language %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -656,7 +656,7 @@ language %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -664,7 +664,7 @@ language %>%
 
 ```{r}
 # Employment ----
-employment <- data_all %>% filter(survey_question == "Employment Status")
+employment <- data_all %>% filter(survey_question == "Employment Status (Currently Working)")
 title <- employment$survey_question[1]
 
 employment %>% 
@@ -692,7 +692,7 @@ employment %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 employment %>% 
@@ -707,7 +707,7 @@ employment %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -721,7 +721,7 @@ employment %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -757,7 +757,7 @@ benefits %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 benefits %>% 
@@ -772,7 +772,7 @@ benefits %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -786,7 +786,7 @@ benefits %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -822,7 +822,7 @@ stable_housing %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 stable_housing %>% 
@@ -837,7 +837,7 @@ stable_housing %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -851,7 +851,7 @@ stable_housing %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -887,7 +887,7 @@ transportation %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 transportation %>% 
@@ -902,7 +902,7 @@ transportation %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -916,7 +916,7 @@ transportation %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -952,7 +952,7 @@ rent_utils %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 rent_utils %>% 
@@ -967,7 +967,8 @@ rent_utils %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -981,7 +982,7 @@ rent_utils %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -1017,7 +1018,7 @@ incarceration %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 incarceration %>% 
@@ -1032,7 +1033,8 @@ incarceration %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -1046,15 +1048,15 @@ incarceration %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
 ```
 
-```{r}
+```{r, fig.width=8}
 # Disability, Learning challenge, Health ----
-disability_health <- data_all %>% filter(survey_question == "Disability, Learning challenge, Health")
+disability_health <- data_all %>% filter(survey_question == "Disability, Learning challenge, and Health Concerns")
 title <- disability_health$survey_question[1]
 
 disability_health %>% 
@@ -1082,7 +1084,7 @@ disability_health %>%
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
-        plot.title = element_text(size = 18),
+        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 disability_health %>% 
@@ -1097,7 +1099,8 @@ disability_health %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = paste0(title, " (as percent of survey responses)")) +
+  labs(title = title,
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -1112,6 +1115,7 @@ disability_health %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
