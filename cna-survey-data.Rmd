@@ -927,7 +927,7 @@ stable_housing %>%
 
 ```
 
-```{r}
+```{r, fig.width=8}
 # Transportation needs ----
 transportation <- data_all %>% filter(survey_question == "Transportation needs")
 title <- transportation$survey_question[1]
@@ -938,7 +938,7 @@ transportation %>%
   geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
             vjust = -0.5,
             size = 4.5) +
-  scale_x_discrete(labels = scales::label_wrap(10),
+  scale_x_discrete(labels = scales::label_wrap(15),
                    name = "") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
