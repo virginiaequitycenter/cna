@@ -175,6 +175,15 @@ United Way,Public Benefits,NA,16,1422,1.13
 All,Public Benefits,Yes,1082,1863,58.08
 All,Public Benefits,No,739,1863,39.67
 All,Public Benefits,NA,42,1863,2.25
+Network2Work,SNAP Recipients,NA,220,441,49.89
+Network2Work,SNAP Recipients,Yes,196,441,44.44
+Network2Work,SNAP Recipients,No,25,441,5.67
+United Way,SNAP Recipients,No,811,1422,57.03
+United Way,SNAP Recipients,Yes,595,1422,41.84
+United Way,SNAP Recipients,NA,16,1422,1.13
+All,SNAP Recipients,No,836,1863,44.87
+All,SNAP Recipients,Yes,791,1863,42.46
+All,SNAP Recipients,NA,236,1863,12.67
 Network2Work,Stable Housing,Stable,300,441,68.03
 Network2Work,Stable Housing,Unstable,111,441,25.17
 Network2Work,Stable Housing,NA,30,441,6.8
@@ -221,3 +230,11 @@ United Way,"Disability, Learning challenge, and Health Concerns",Learning challe
 United Way,"Disability, Learning challenge, and Health Concerns",Experiencing substance abuse,28,1422,1.97
 United Way,"Disability, Learning challenge, and Health Concerns",None,1109,1422,77.99
 United Way,"Disability, Learning challenge, and Health Concerns",NA,15,1422,1.05
+Network2Work,Annual Personal Wages,"Less than $10,000",167,441,37.87
+Network2Work,Annual Personal Wages,"$15,000 to $24,999",86,441,19.5
+Network2Work,Annual Personal Wages,"$35,000 to $49,999",58,441,13.15
+Network2Work,Annual Personal Wages,"$25,000 to $34,999",56,441,12.7
+Network2Work,Annual Personal Wages,"$10,000 to $14,999",50,441,11.34
+Network2Work,Annual Personal Wages,"$50,000 to $74,999",22,441,4.99
+Network2Work,Annual Personal Wages,"$100,000 to $149,999",1,441,0.23
+Network2Work,Annual Personal Wages,"$75,000 to $99,999",1,441,0.23

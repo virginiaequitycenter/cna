@@ -515,6 +515,44 @@ benefits_all <- benefits %>%
 
 benefits <- rbind(benefits, benefits_all)
 
+# SNAP recipients ----
+snap_n2w <- n2w_fy_23_24 %>%
+  count(benefits_snap) %>%
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "SNAP Recipients",
+         survey = "Network2Work") %>% 
+  rename(data_point = benefits_snap,
+         survey_count = n)
+
+snap_uw <- uw_fy_24 %>%
+  mutate(recieve_snap_uw = case_when(str_detect(group_family_supports, "SNAP") ~ "Yes",
+                                           !str_detect(group_family_supports, "SNAP") ~ "No",
+                                           .default = group_family_supports)) %>% 
+  count(recieve_snap_uw) %>%
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "SNAP Recipients",
+         survey = "United Way") %>% 
+  rename(data_point = recieve_snap_uw,
+         survey_count = n)
+
+snap <- rbind(snap_n2w, snap_uw) %>%
+  select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
+
+snap_all <- snap %>% 
+  group_by(survey_question, data_point) %>% 
+  summarise(survey_count = sum(survey_count)) %>%
+  arrange(desc(survey_count)) %>%
+  mutate(survey_total = sum(survey_count),
+         survey_percent = round((survey_count/survey_total) * 100, 2),
+         survey = "All") %>% 
+  ungroup()
+
+snap <- rbind(snap, snap_all)
+
 # Housing instability ----
 # UW unstable including movement / unstable not including
 # N2W - combine answers from housing_rentown, housing_stable
@@ -913,6 +951,32 @@ childcare_n2w <- rbind(childcare_find_n2w, childcare_fund_n2w, afterschool_find_
             survey_total = first(survey_total),
             survey_percent = round((survey_count/survey_total) * 100, 2))
 
+# Wages ----
+# N2W quarterly wages 
+# Pre-enrollment wages 
+wages_n2w <- n2w_fy_23_24 %>%
+  select(wages) %>% 
+  mutate(wage_annual = wages*4,
+         wage_bins = case_when(wage_annual < 10000 ~ "Less than $10,000",
+                               wage_annual >= 10000 & wage_annual < 15000 ~ "$10,000 to $14,999",
+                               wage_annual >= 15000 & wage_annual < 25000 ~ "$15,000 to $24,999",
+                               wage_annual >= 25000 & wage_annual < 35000 ~ "$25,000 to $34,999",
+                               wage_annual >= 35000 & wage_annual < 50000 ~ "$35,000 to $49,999",
+                               wage_annual >= 50000 & wage_annual < 75000 ~ "$50,000 to $74,999",
+                               wage_annual >= 75000 & wage_annual < 100000 ~ "$75,000 to $99,999",
+                               wage_annual >= 100000 & wage_annual < 150000 ~ "$100,000 to $149,999",
+                               wage_annual >= 150000 & wage_annual < 200000 ~ "$150,000 to $199,999",
+                               wage_annual >= 200000 ~ "$200,000 or more")) %>% 
+  count(wage_bins) %>%
+  arrange(desc(n)) %>%
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Annual Personal Wages",
+         survey = "Network2Work") %>%
+  rename(data_point = wage_bins,
+         survey_count = n) %>% 
+  select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
+
 
 # Combine tables ----
 data_all <- rbind(locality,
@@ -928,32 +992,36 @@ data_all <- rbind(locality,
                   language,
                   employed,
                   benefits,
+                  snap,
                   housing_stable,
                   transportation,
                   housing_rent_utils,
                   incarceration,
-                  health_mental_concerns_uw)
+                  health_mental_concerns_uw,
+                  wages_n2w)
 
 # Create CSV ----
 write_csv(data_all, "cna_data_all.csv")
 
 # Create Excel workbook ----
 demographics_sheet <- rbind(locality, age, race, ethnicity, gender)
+benefits_sheet <- rbind(benefits, snap)
 housing_sheet <- rbind(housing_stable, housing_rent_utils)
 
-wb_sheets <- list("Demographics" = demographics_sheet,
-                  "Education Level" = educ_level,
-                  "Military Service" = military,
+wb_sheets <- list("Education Level" = educ_level,
                   "Children living in home" = child_count,
                   "Single Parent" = singleparent,
                   "Childcare Needs" = childcare_n2w,
                   "Primary Language" = language,
                   "Employment Status" = employed,
-                  "Public Benefits" = benefits,
+                  "Military Service" = military,
+                  "Public Benefits & SNAP" = benefits_sheet,
                   "Housing" = housing_sheet,
                   "Transportation needs" = transportation,
                   "Incarceration" = incarceration,
-                  "Health" = health_mental_concerns_uw)
+                  "Health" = health_mental_concerns_uw,
+                  "Demographics" = demographics_sheet,
+                  "Annual Wages" = wages_n2w)
 
 write.xlsx(wb_sheets, file = "CNA_Survey_Data.xlsx", keepNA = TRUE)
 
