@@ -5,6 +5,7 @@
 library(tidyverse)
 library(tidycensus)
 library(viridis)
+library(scales)
 
 # Get data ---- 
 region <- c("003", "540", "065", "079", "109", "125")
@@ -112,3 +113,31 @@ ggplot(fam_income_county) +
 
 # Save ---- 
 save(income_county, fam_income_county, file = "income.RData")
+
+
+# Binned: low, middle, high 
+income_county_bins <- income_county %>% 
+  mutate(income_lowmedhi = case_when(
+    variable %in% c("B19001_002", "B19001_003", "B19001_003",
+                    "B19001_004", "B19001_005", "B19001_006",
+                    "B19001_007") ~ "Under $35K",
+    variable %in% c("B19001_008", "B19001_009", "B19001_010",
+                    "B19001_011", "B19001_012", "B19001_013") ~ "$35K to $100K",
+    variable %in% c("B19001_014", "B19001_015", "B19001_016",
+                    "B19001_017") ~ "$100K or more")
+  ) %>% 
+  group_by(GEOID, NAME, income_lowmedhi) %>%
+  summarize(count = sum(estimate))
+  
+fam_income_county_bins <- fam_income_county %>% 
+  mutate(income_lowmedhi = case_when(
+    variable %in% c("B19101_002", "B19101_003", "B19101_003",
+                    "B19101_004", "B19101_005", "B19101_006",
+                    "B19101_007", "B19101_008") ~ "Under $40K",
+    variable %in% c("B19101_009", "B19101_010",
+                    "B19101_011", "B19101_012", "B19101_013") ~ "$40K to $100K",
+    variable %in% c("B19101_014", "B19101_015", "B19101_016",
+                    "B19101_017") ~ "$100K or more")
+  ) %>% 
+  group_by(GEOID, NAME, income_lowmedhi) %>%
+  summarize(count = sum(estimate))
