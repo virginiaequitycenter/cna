@@ -28,9 +28,9 @@ wage_fy_23_24_filtered <- wage_fy_23_24 %>%
   mutate(wage_yq = paste0(periodyear, ".", period),
          wage_date = lubridate::yq(wage_yq))
 
-# Filter wage date to pre-enrollment value closest to enrollment date
+# Filter wage data to pre-enrollment value closest to enrollment date
 wage_fy_23_24_filtered <- wage_fy_23_24_filtered %>% 
-  filter(wage_date <= enrollment_date) %>% 
+  filter(wage_date <= enrollment_date) %>%     # filter to wage data that is earlier than enrollment date
   mutate(diff = abs(as.Date(enrollment_date) - wage_date)) %>% 
   group_by(seeker_id, enrollment_date) %>% 
   slice_min(diff)
@@ -66,70 +66,70 @@ survey_fy_23_24_pdc <- survey_fy_23_24 %>%
 # save csv
 write_csv(survey_fy_23_24_pdc, "data/survey_23_24_pdc.csv")
 
-# .........................................
-# Surveys by question categories
-# Read in csv
-survey_fy_23_24_pdc <- read_csv("data/survey_23_24_pdc.csv")
-
-# Demographics
-survey_demographics <- survey_fy_23_24_pdc %>% 
-  select(seeker_id, starts_with("dem_"))
-
-age <- survey_demographics %>%
-  count(dem_age) %>%
-  arrange(desc(n)) %>% 
-  mutate(variable = "age",
-         survey = "Network2Work")
-
-locality <- survey_demographics %>%
-  count(dem_locality) %>%
-  arrange(desc(n)) %>% 
-  mutate(variable = "locality",
-         survey = "Network2Work")
-
-race <- survey_demographics %>%
-  count(dem_raceethnicity) %>%
-  arrange(desc(n)) %>% 
-  mutate(variable = "race",
-         survey = "Network2Work")
-
-ethnicity <- survey_demographics %>%
-  count(dem_hispanic) %>%
-  arrange(desc(n)) %>% 
-  mutate(variable = "ethnicity",
-         survey = "Network2Work")
-
-genderidentity <- survey_demographics %>%
-  count(dem_genderidentity) %>%
-  arrange(desc(n)) %>% 
-  mutate(variable = "genderidentity",
-         survey = "Network2Work")
-
-# Family
-survey_family <- survey_fy_23_24_pdc %>% 
-  select(seeker_id, starts_with("fam_"))
-
-singleparent <- survey_family %>%
-  count(fam_singleparent) %>%
-  arrange(desc(n)) %>% 
-  mutate(variable = "singleparent",
-         survey = "Network2Work")
-
-# Education
-survey_educ <- survey_fy_23_24_pdc %>% 
-  select(seeker_id, starts_with("educ_"))
-
-highestgrade <- survey_educ %>%
-  count(educ_highestgrade) %>%
-  arrange(desc(n)) %>% 
-  mutate(variable = "age",
-         survey = "Network2Work")
-
-# Housing
-survey_housing <- survey_fy_23_24_pdc %>% 
-  select(seeker_id, starts_with("housing_"))
-
-# Health
-survey_health <- survey_fy_23_24_pdc %>% 
-  select(seeker_id, starts_with("health_"))
-
+# # .........................................
+# # Surveys by question categories
+# # Read in csv
+# survey_fy_23_24_pdc <- read_csv("data/survey_23_24_pdc.csv")
+# 
+# # Demographics
+# survey_demographics <- survey_fy_23_24_pdc %>% 
+#   select(seeker_id, starts_with("dem_"))
+# 
+# age <- survey_demographics %>%
+#   count(dem_age) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(variable = "age",
+#          survey = "Network2Work")
+# 
+# locality <- survey_demographics %>%
+#   count(dem_locality) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(variable = "locality",
+#          survey = "Network2Work")
+# 
+# race <- survey_demographics %>%
+#   count(dem_raceethnicity) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(variable = "race",
+#          survey = "Network2Work")
+# 
+# ethnicity <- survey_demographics %>%
+#   count(dem_hispanic) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(variable = "ethnicity",
+#          survey = "Network2Work")
+# 
+# genderidentity <- survey_demographics %>%
+#   count(dem_genderidentity) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(variable = "genderidentity",
+#          survey = "Network2Work")
+# 
+# # Family
+# survey_family <- survey_fy_23_24_pdc %>% 
+#   select(seeker_id, starts_with("fam_"))
+# 
+# singleparent <- survey_family %>%
+#   count(fam_singleparent) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(variable = "singleparent",
+#          survey = "Network2Work")
+# 
+# # Education
+# survey_educ <- survey_fy_23_24_pdc %>% 
+#   select(seeker_id, starts_with("educ_"))
+# 
+# highestgrade <- survey_educ %>%
+#   count(educ_highestgrade) %>%
+#   arrange(desc(n)) %>% 
+#   mutate(variable = "age",
+#          survey = "Network2Work")
+# 
+# # Housing
+# survey_housing <- survey_fy_23_24_pdc %>% 
+#   select(seeker_id, starts_with("housing_"))
+# 
+# # Health
+# survey_health <- survey_fy_23_24_pdc %>% 
+#   select(seeker_id, starts_with("health_"))
+# 

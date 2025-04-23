@@ -18,15 +18,6 @@ library(scales)
 # Read in Survey Data ----
 data_all <- read_csv("cna_data_all.csv")
 
-# # Network2Work
-# n2w_fy_23_24 <- read_csv("Network2Work/data/survey_23_24_pdc.csv")
-# 
-# # United Way
-# uw_fy_24 <- read_csv("UnitedWay/data/CE_FY24_CNA.csv") %>% 
-#   clean_names()
-# # Filter for planning district only: Albemarle, Charlottesville, Fluvanna, Greene,  Louisa, Nelson
-# uw_fy_24 <- uw_fy_24 %>% 
-#   filter(locality %in% c("Albemarle", "Charlottesville", "Fluvanna", "Greene", "Louisa", "Nelson"))
 ```
 
 ```{r, fig.width=8}
@@ -50,15 +41,16 @@ locality %>%
   theme(legend.position = "top",
         legend.justification.top = "left",
         legend.title=element_blank(),
-        legend.text = element_text(size = 14),
+        legend.text = element_text(size = 13),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 locality %>% 
@@ -72,7 +64,8 @@ locality %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -81,12 +74,13 @@ locality %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 ```
 
@@ -112,15 +106,16 @@ age %>%
   theme(legend.position = "top",
         legend.justification.top = "left",
         legend.title=element_blank(),
-        legend.text = element_text(size = 14),
+        legend.text = element_text(size = 13),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 age %>% 
@@ -135,7 +130,8 @@ age %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -144,12 +140,13 @@ age %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -180,12 +177,13 @@ race %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 race %>% 
@@ -201,7 +199,8 @@ race %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -210,12 +209,13 @@ race %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -244,12 +244,13 @@ ethnicity %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ethnicity %>% 
@@ -263,7 +264,8 @@ ethnicity %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -272,12 +274,13 @@ ethnicity %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 
@@ -307,12 +310,13 @@ gender %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 gender %>% 
@@ -326,7 +330,8 @@ gender %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -335,12 +340,13 @@ gender %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -370,12 +376,13 @@ edu_attain %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 edu_attain %>% 
@@ -390,7 +397,8 @@ edu_attain %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -399,12 +407,13 @@ edu_attain %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -434,12 +443,13 @@ military %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 military %>% 
@@ -454,7 +464,8 @@ military %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -463,12 +474,13 @@ military %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -497,12 +509,13 @@ children_home %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 children_home %>% 
@@ -516,7 +529,8 @@ children_home %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -525,12 +539,13 @@ children_home %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 ```
@@ -559,11 +574,11 @@ single_parent %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
+        text = element_text(size = 13),
         plot.title = element_text(size = 18),         
         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
@@ -589,11 +604,11 @@ single_parent %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
+        text = element_text(size = 13),
         plot.title = element_text(size = 18),         
         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
@@ -625,11 +640,11 @@ childcare %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
+        text = element_text(size = 13),
         plot.title = element_text(size = 18),         
         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
@@ -656,11 +671,11 @@ childcare %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
+        text = element_text(size = 13),
         plot.title = element_text(size = 18),         
         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
@@ -692,12 +707,13 @@ language %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 language %>% 
@@ -712,7 +728,8 @@ language %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -721,12 +738,13 @@ language %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -757,12 +775,13 @@ employment %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 employment %>% 
@@ -777,7 +796,8 @@ employment %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -786,12 +806,13 @@ employment %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -822,12 +843,13 @@ benefits %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 benefits %>% 
@@ -842,7 +864,8 @@ benefits %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -851,12 +874,81 @@ benefits %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+  
+
+```
+
+```{r}
+# SNAP Recipients ----
+snap <- data_all %>% filter(survey_question == "SNAP Recipients")
+title <- snap$survey_question[1]
+
+snap %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+benefits %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -887,12 +979,13 @@ stable_housing %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 stable_housing %>% 
@@ -916,12 +1009,13 @@ stable_housing %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -952,12 +1046,13 @@ transportation %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 transportation %>% 
@@ -972,7 +1067,8 @@ transportation %>%
                      expand = expansion(mult = c(0, 0.08)),
                      name = "Number of Responses") +
   scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
-  labs(title = title,        subtitle = "(as percent of survey responses)") +
+  labs(title = title,        
+       subtitle = "(as percent of survey responses)") +
   coord_cartesian(expand=FALSE, clip="off") +
   theme_minimal() +
   theme(legend.position = "top",
@@ -981,12 +1077,13 @@ transportation %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -1017,12 +1114,13 @@ rent_utils %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 rent_utils %>% 
@@ -1047,12 +1145,13 @@ rent_utils %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -1083,12 +1182,13 @@ incarceration %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 incarceration %>% 
@@ -1113,12 +1213,13 @@ incarceration %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
   
 
@@ -1149,12 +1250,13 @@ disability_health %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),         plot.subtitle = element_text(size = 18),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
 
 disability_health %>% 
@@ -1179,11 +1281,81 @@ disability_health %>%
         legend.text = element_text(size = 14),
         panel.grid.minor.x = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 13),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+  
+
+```
+
+```{r, fig.width=8}
+# Annual Wages ----
+wages_n2w <- data_all %>% filter(survey_question == "Annual Personal Wages")
+title <- wages_n2w$survey_question[1]
+
+wages_n2w %>% 
+  mutate(data_point = factor(data_point, levels = c("Less than $10,000", "$10,000 to $14,999", "$15,000 to $24,999", "$25,000 to $34,999", "$35,000 to $49,999", "$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $149,999"))) %>% 
+  ggplot(aes(x = data_point, y = survey_count, fill = survey, label = survey_count)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
+  labs(title = title) +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+wages_n2w %>% 
+  mutate(data_point = factor(data_point, levels = c("Less than $10,000", "$10,000 to $14,999", "$15,000 to $24,999", "$25,000 to $34,999", "$35,000 to $49,999", "$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $149,999"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5,
+            size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     expand = expansion(mult = c(0, 0.08)),
+                     name = "Number of Responses") +
+  scale_fill_manual(values = c("All" = "#F8766D", "Network2Work" = "#00BA38", "United Way" = "#619CFF")) +
+  labs(title = title,
+       subtitle = "(as percent of survey responses)") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
         plot.title = element_text(size = 18),
         plot.subtitle = element_text(size = 18),
         plot.caption = element_text(size = 12))
