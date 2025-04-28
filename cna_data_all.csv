@@ -195,10 +195,11 @@ All,Stable Housing,Stable,1423,1863,76.38
 All,Stable Housing,Unstable,203,1863,10.9
 All,Stable Housing,Prior instability and/or frequent movement,188,1863,10.09
 All,Stable Housing,NA,49,1863,2.63
-Network2Work,Transportation needs,NA,149,441,33.79
 Network2Work,Transportation needs,Does not have driver’s license,120,441,27.21
+Network2Work,Transportation needs,None,118,441,26.76
 Network2Work,Transportation needs,Does not have reliable transportation,104,441,23.58
-Network2Work,Transportation needs,None,68,441,15.42
+Network2Work,Transportation needs,"Have car access, not reliable or registered",76,441,17.23
+Network2Work,Transportation needs,NA,23,441,5.22
 United Way,Transportation needs,Works longer hours than school day,459,1422,32.28
 United Way,Transportation needs,Does not have driver’s license,138,1422,9.7
 United Way,Transportation needs,Does not have reliable transportation,169,1422,11.88
@@ -230,11 +231,13 @@ United Way,"Disability, Learning challenge, and Health Concerns",Learning challe
 United Way,"Disability, Learning challenge, and Health Concerns",Experiencing substance abuse,28,1422,1.97
 United Way,"Disability, Learning challenge, and Health Concerns",None,1109,1422,77.99
 United Way,"Disability, Learning challenge, and Health Concerns",NA,15,1422,1.05
+Network2Work,Disability Accommodations,No,347,441,78.68
+Network2Work,Disability Accommodations,Yes,50,441,11.34
+Network2Work,Disability Accommodations,NA,44,441,9.98
 Network2Work,Annual Personal Wages,"Less than $10,000",167,441,37.87
 Network2Work,Annual Personal Wages,"$15,000 to $24,999",86,441,19.5
 Network2Work,Annual Personal Wages,"$35,000 to $49,999",58,441,13.15
 Network2Work,Annual Personal Wages,"$25,000 to $34,999",56,441,12.7
 Network2Work,Annual Personal Wages,"$10,000 to $14,999",50,441,11.34
 Network2Work,Annual Personal Wages,"$50,000 to $74,999",22,441,4.99
-Network2Work,Annual Personal Wages,"$100,000 to $149,999",1,441,0.23
-Network2Work,Annual Personal Wages,"$75,000 to $99,999",1,441,0.23
+Network2Work,Annual Personal Wages,"$75,000 or more",2,441,0.45

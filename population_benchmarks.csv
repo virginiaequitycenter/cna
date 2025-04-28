@@ -1,0 +1,126 @@
+pop_equiv,question_equiv,group,estimate,total,percent,estimate_units
+Network2Work,Locality,"Albemarle County, Virginia",50830.73499999999,119287.85299999999,42.61182821355666,persons
+Network2Work,Locality,"Fluvanna County, Virginia",12354.695999999998,119287.85299999999,10.357044484655113,persons
+Network2Work,Locality,"Greene County, Virginia",9529.574999999999,119287.85299999999,7.988722036936988,persons
+Network2Work,Locality,"Louisa County, Virginia",17800.629,119287.85299999999,14.922415444932186,persons
+Network2Work,Locality,"Nelson County, Virginia",5717.538,119287.85299999999,4.7930596923393365,persons
+Network2Work,Locality,"Charlottesville city, Virginia",23054.68,119287.85299999999,19.326930127579715,persons
+Network2Work,Age,18 and under,3072,93244,3.294581957016001,persons
+Network2Work,Age,19-24,15258,93244,16.36351936853846,persons
+Network2Work,Age,25-54,58594,93244,62.83943202779804,persons
+Network2Work,Age,55-59,8794,93244,9.431169833983956,persons
+Network2Work,Age,60+,7526,93244,8.07129681266355,persons
+Network2Work,Race,American Indian/Alaskan Native,164,93244,0.1758826305177813,persons
+Network2Work,Race,Asian,3954,93244,4.240487323581142,persons
+Network2Work,Race,Black,12388,93244,13.285573334477284,persons
+Network2Work,Race,Hawaiian/Pacific Islander,69,93244,0.07399939942516409,persons
+Network2Work,Race,Multiracial,4554,93244,4.883960362060829,persons
+Network2Work,Race,Some other race,2849,93244,3.0554244777143835,persons
+Network2Work,Race,White,69266,93244,74.2846724722234,persons
+Network2Work,Ethnicity,Hispanic,6631,93244,7.111449530264682,persons
+Network2Work,Ethnicity,Not Hispanic,86613,93244,92.88855046973532,persons
+Network2Work,Sex,Female,49644,93244,53.240959203809354,persons
+Network2Work,Sex,Male,43600,93244,46.75904079619064,persons
+Network2Work,Education Level,Associate's Degree,5730,93244,6.145167517481018,persons
+Network2Work,Education Level,Bachelor's Degree,21979,93244,23.57148985457509,persons
+Network2Work,Education Level,Did Not Complete High School,7826,93244,8.393033331903393,persons
+Network2Work,Education Level,GED,3188,93244,3.4189867444554074,persons
+Network2Work,Education Level,Graduate Degree,13117,93244,14.067393076230106,persons
+Network2Work,Education Level,High School Graduate,20982,93244,22.50225215563468,persons
+Network2Work,Education Level,Some College or Advanced Training,20422,93244,21.901677319720303,persons
+Network2Work,Employment Status,No,4163,93244,4.4646304319849,persons
+Network2Work,Employment Status,Yes,89081,93244,95.5353695680151,persons
+Network2Work,Military Service,None,89085,93244,95.53965938827163,persons
+Network2Work,Military Service,U.S. Military Service,4159,93244,4.460340611728369,persons
+Network2Work,Disability,Disability,6202,93244,6.6513663077517045,persons
+Network2Work,Disability,None,87042,93244,93.3486336922483,persons
+Network2Work,Primary Language,English,82020,93244,87.96276436017331,persons
+Network2Work,Primary Language,Other,11224,93244,12.037235639826692,persons
+Network2Work,Children at Home,0,59985,93244,64.33121702200678,persons
+Network2Work,Children at Home,1,15045,93244,16.13508643987817,persons
+Network2Work,Children at Home,2,12734,93244,13.65664278666724,persons
+Network2Work,Children at Home,3,4119,93244,4.417442409163056,persons
+Network2Work,Children at Home,4 or more,1361,93244,1.4596113422847583,persons
+Network2Work,Single Parent,No,86609,93244,92.88426064947879,persons
+Network2Work,Single Parent,Single parent/guardian,6635,93244,7.115739350521213,persons
+Network2Work,SNAP Recipients,No SNAP,86477,93244,92.74269658101325,persons
+Network2Work,SNAP Recipients,SNAP,6767,93244,7.257303418986745,persons
+Network2Work,Stable Housing,Moved within Year,15987,93244,17.145339110291282,persons
+Network2Work,Stable Housing,No Move within Year,77257,93244,82.85466088970873,persons
+Network2Work,Stable Housing,Not Overcrowded,88871,93244,95.31015400454721,persons
+Network2Work,Stable Housing,Overcrowded,4373,93244,4.6898459954527905,persons
+Network2Work,Stable Housing,Burdened,13619,93244,14.605765518424779,persons
+Network2Work,Stable Housing,Not Burdened,70378,93244,75.4772425035391,persons
+Network2Work,Stable Housing,Severely Burdened,9247,93244,9.91699197803612,persons
+Network2Work,Transportation,Commute by Car,66944,86596,77.30611113677305,persons
+Network2Work,Transportation,"Commute by Motorcycle, Bike, Walk, Other",17635,86596,20.364681971453646,persons
+Network2Work,Transportation,Commute by Public Transportation,2017,86596,2.329206891773292,persons
+Network2Work,Transportation,Commute by Car: Carpool,7936,66944,11.854684512428298,persons
+Network2Work,Transportation,Commute by Car: Own Car,59008,66944,88.14531548757171,persons
+Network2Work,Transportation,Household has Car,87436,90336,96.7897626638328,persons
+Network2Work,Transportation,Household has no Car,2900,90336,3.210237336167198,persons
+Network2Work,Annual Personal Wages,"$10,000 to $14,999",5742,93244,6.158036978250611,persons
+Network2Work,Annual Personal Wages,"$15,000 to $24,999",12312,93244,13.204066749603191,persons
+Network2Work,Annual Personal Wages,"$25,000 to $34,999",13372,93244,14.340869117583974,persons
+Network2Work,Annual Personal Wages,"$35,000 to $49,999",18294,93244,19.619492943245678,persons
+Network2Work,Annual Personal Wages,"$50,000 to $74,999",23981,93244,25.718544892968985,persons
+Network2Work,Annual Personal Wages,"Less than $10,000",19543,93244,20.958989318347562,persons
+United Way,Locality,"Albemarle County, Virginia",4224.031,10301.749,41.00304715247867,households
+United Way,Locality,"Fluvanna County, Virginia",1326.7649999999999,10301.749,12.879026658482942,households
+United Way,Locality,"Greene County, Virginia",957.8700000000001,10301.749,9.298129861249775,households
+United Way,Locality,"Louisa County, Virginia",1485.375,10301.749,14.418668131013481,households
+United Way,Locality,"Nelson County, Virginia",399.375,10301.749,3.876768886525968,households
+United Way,Locality,"Charlottesville city, Virginia",1908.333,10301.749,18.524359310249164,households
+United Way,Age,19-24,258,7331,3.5193015959623515,households
+United Way,Age,25-39,4878,7331,66.53935343063702,households
+United Way,Age,40-54,1514,7331,20.65202564452326,households
+United Way,Age,55-59,149,7331,2.03246487518756,households
+United Way,Age,60+,372,7331,5.07434183603874,households
+United Way,Age,NA,160,7331,2.1825126176510707,households
+United Way,Race,American Indian/Alaskan Native,22,7331,0.30009548492702226,households
+United Way,Race,Asian,432,7331,5.8927840676578915,households
+United Way,Race,Black,978,7331,13.340608375392172,households
+United Way,Race,Multiracial,370,7331,5.047060428318102,households
+United Way,Race,Some other race,164,7331,2.2370754330923477,households
+United Way,Race,White,5365,7331,73.18237621061246,households
+United Way,Ethnicity,Hispanic,373,7331,5.087982539899059,households
+United Way,Ethnicity,Not Hispanic,6958,7331,94.91201746010094,households
+United Way,Sex,Female,7792,14589,53.410103502638975,persons
+United Way,Sex,Male,6797,14589,46.589896497361025,persons
+United Way,Education Level,Associate's Degree,662,14589,4.53766536431558,persons
+United Way,Education Level,Bachelor's Degree,3744,14589,25.6631708821715,persons
+United Way,Education Level,Did Not Complete High School,1558,14589,10.679278908766879,persons
+United Way,Education Level,GED,546,14589,3.74254575365001,persons
+United Way,Education Level,Graduate Degree,2730,14589,18.71272876825005,persons
+United Way,Education Level,High School Graduate,2798,14589,19.17883336760573,persons
+United Way,Education Level,Some College or Advanced Training,2551,14589,17.48577695524025,persons
+United Way,Employment Status,No,3642,14589,24.96401398313798,persons
+United Way,Employment Status,Yes,10947,14589,75.03598601686203,persons
+United Way,Military Service,None,6330,7331,86.34565543582049,household
+United Way,Military Service,U.S. Military Service,1001,7331,13.654344564179514,household
+United Way,Disability,Disability,1328,7331,18.114854726503886,household
+United Way,Disability,None,6003,7331,81.88514527349611,household
+United Way,Primary Language,English,6252,7331,85.28168053471559,households
+United Way,Primary Language,Other,1079,7331,14.718319465284408,households
+United Way,Children at Home,1,2415,7331,32.94229982267085,households
+United Way,Children at Home,2,2901,7331,39.571681898785975,households
+United Way,Children at Home,3,1371,7331,18.701404992497615,households
+United Way,Children at Home,4 or more,644,7331,8.78461328604556,households
+United Way,Single Parent,No,5702,7331,77.77929341154004,households
+United Way,Single Parent,Single parent/guardian,1629,7331,22.220706588459965,households
+United Way,SNAP Recipients,No SNAP,6010,7331,81.98063020051835,households
+United Way,SNAP Recipients,SNAP,1321,7331,18.01936979948165,households
+United Way,Stable Housing,Moved within Year,1502,7331,20.488337198199428,households
+United Way,Stable Housing,No Move within Year,5829,7331,79.51166280180058,households
+United Way,Stable Housing,Not Overcrowded,6796,7331,92.70222343472923,households
+United Way,Stable Housing,Overcrowded,535,7331,7.297776565270768,households
+United Way,Stable Housing,Burdened,1211,7331,16.51889237484654,households
+United Way,Stable Housing,Not Burdened,4904,7331,66.89401173100532,households
+United Way,Stable Housing,Severely Burdened,1216,7331,16.58709589414814,households
+United Way,Transportation,Commute by Car,8745,11193,78.12918788528545,persons
+United Way,Transportation,"Commute by Motorcycle, Bike, Walk, Other",2374,11193,21.20968462431877,persons
+United Way,Transportation,Commute by Public Transportation,74,11193,0.6611274903957831,persons
+United Way,Transportation,Commute by Car: Carpool,1318,8745,15.071469411092053,persons
+United Way,Transportation,Commute by Car: Own Car,7427,8745,84.92853058890795,persons
+United Way,Transportation,Household has Car,7088,7331,96.68530896194244,households
+United Way,Transportation,Household has no Car,243,7331,3.3146910380575636,households

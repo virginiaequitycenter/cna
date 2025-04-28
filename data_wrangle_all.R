@@ -409,11 +409,11 @@ singleparent <- rbind(singleparent, singleparent_all)
 
 # language_n2w <- n2w_fy_23_24 %>%
 #   count(ell_language) %>%
-#   arrange(desc(n)) %>% 
+#   arrange(desc(n)) %>%
 #   mutate(survey_total = sum(n),
 #          survey_percent = round((n/survey_total) * 100, 2),
 #          survey_question = "Primary Language",
-#          survey = "Network2Work") %>% 
+#          survey = "Network2Work") %>%
 #   rename(data_point = ell_language,
 #          survey_count = n)
 
@@ -630,7 +630,11 @@ transportation_n2w <- n2w_fy_23_24 %>%
   mutate(tranport_needs = case_when(is.na(transportation_need) ~ NA,
                                     str_detect(transportation_validlicense, "No") ~ "Does not have driver’s license",
                                     transportation_need == "Yes" | transportation_need == "No- I plan to walk" | transportation_reliableride == "Somewhat reliable-I may need help with a backup transportation plan" ~ "Does not have reliable transportation",
-                                    transportation_need == "No-I plan to take my own vehicle" & transportation_validlicense == "Yes" & transportation_caraccess == "Yes" & str_detect(transportation_carinspection, "Yes") & transportation_carregistration == "Yes, registration is up to date" ~ "None")) %>% 
+                                    transportation_need == "No-I plan to take my own vehicle" & transportation_caraccess == "No" | str_detect(transportation_carinspection, "No") | transportation_carregistration == "No, my registration has expired" ~ "Have car access, not reliable or registered",
+                                    transportation_need == "No-I plan to take my own vehicle" & transportation_validlicense == "Yes" & transportation_caraccess == "Yes" & str_detect(transportation_carinspection, "Yes") & transportation_carregistration == "Yes, registration is up to date" | is.na(transportation_carregistration) ~ "None",
+                                    transportation_reliableride == "Very Reliable-I have no concerns" ~ "None",
+                                    transportation_need == "No- I plan on taking the bus" ~ "None"
+                                    )) %>% 
   
   count(tranport_needs) %>%
   arrange(desc(n)) %>% 
@@ -765,6 +769,16 @@ incarceration_all <- incarceration %>%
 incarceration <- rbind(incarceration, incarceration_all)
 
 # Disability, Learning challenge, Mental & Chronic Health ----
+# N2W Need help getting disability accommodations for employment
+disability_n2w <- n2w_fy_23_24 %>%
+  count(disability_accommodate) %>%
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Disability Accommodations",
+         survey = "Network2Work") %>% 
+  rename(data_point = disability_accommodate,
+         survey_count = n)
 
 # UW How often does each show up
 disability_mental_health_uw <- uw_fy_24 %>%
@@ -963,10 +977,7 @@ wages_n2w <- n2w_fy_23_24 %>%
                                wage_annual >= 25000 & wage_annual < 35000 ~ "$25,000 to $34,999",
                                wage_annual >= 35000 & wage_annual < 50000 ~ "$35,000 to $49,999",
                                wage_annual >= 50000 & wage_annual < 75000 ~ "$50,000 to $74,999",
-                               wage_annual >= 75000 & wage_annual < 100000 ~ "$75,000 to $99,999",
-                               wage_annual >= 100000 & wage_annual < 150000 ~ "$100,000 to $149,999",
-                               wage_annual >= 150000 & wage_annual < 200000 ~ "$150,000 to $199,999",
-                               wage_annual >= 200000 ~ "$200,000 or more")) %>% 
+                               wage_annual >= 75000 ~ "$75,000 or more")) %>% 
   count(wage_bins) %>%
   arrange(desc(n)) %>%
   mutate(survey_total = sum(n),
@@ -998,6 +1009,7 @@ data_all <- rbind(locality,
                   housing_rent_utils,
                   incarceration,
                   health_mental_concerns_uw,
+                  disability_n2w,
                   wages_n2w)
 
 # Create CSV ----
@@ -1007,21 +1019,22 @@ write_csv(data_all, "cna_data_all.csv")
 demographics_sheet <- rbind(locality, age, race, ethnicity, gender)
 benefits_sheet <- rbind(benefits, snap)
 housing_sheet <- rbind(housing_stable, housing_rent_utils)
+health_sheet <- rbind(health_mental_concerns_uw, disability_n2w)
 
 wb_sheets <- list("Education Level" = educ_level,
-                  "Children living in home" = child_count,
-                  "Single Parent" = singleparent,
-                  "Childcare Needs" = childcare_n2w,
-                  "Primary Language" = language,
-                  "Employment Status" = employed,
+                  "Health" = health_sheet,
                   "Military Service" = military,
+                  "Incarceration" = incarceration,
+                  "Primary Language" = language,
+                  "Children living in home" = child_count,
+                  "Childcare Needs" = childcare_n2w,
+                  "Single Parent" = singleparent,
+                  "Employment Status" = employed,
                   "Public Benefits & SNAP" = benefits_sheet,
+                  "Annual Wages" = wages_n2w,
                   "Housing" = housing_sheet,
                   "Transportation needs" = transportation,
-                  "Incarceration" = incarceration,
-                  "Health" = health_mental_concerns_uw,
-                  "Demographics" = demographics_sheet,
-                  "Annual Wages" = wages_n2w)
+                  "Demographics" = demographics_sheet)
 
 write.xlsx(wb_sheets, file = "CNA_Survey_Data.xlsx", keepNA = TRUE)
 
