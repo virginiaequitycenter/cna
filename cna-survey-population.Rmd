@@ -3140,7 +3140,7 @@ p1 <- house %>%
         plot.caption = element_text(size = 12))
 
 house_pops <- pops %>% 
-  filter(pop_equiv == "Network2Work", str_detect(question_equiv, "Housing")) %>% 
+  filter(pop_equiv == "United Way", str_detect(question_equiv, "Housing")) %>% 
   mutate(group = factor(group, 
                         levels = c("Not Burdened", "Burdened", "Severely Burdened",
                                    "Not Overcrowded", "Overcrowded",
@@ -3361,7 +3361,7 @@ p1 <- tran %>%
         plot.caption = element_text(size = 12))
 
 tran_pops <- pops %>% 
-  filter(pop_equiv == "Network2Work", str_detect(question_equiv, "Transportation")) %>% 
+  filter(pop_equiv == "United Way", str_detect(question_equiv, "Transportation")) %>% 
   mutate(group = factor(group, 
                         levels = c("Household has Car", "Household has no Car", "Commute by Car: Own Car", "Commute by Car: Carpool", "Commute by Motorcycle, Bike, Walk, Other", "Commute by Public Transportation")))
 
