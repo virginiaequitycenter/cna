@@ -1,0 +1,1020 @@
+---
+title: "CNA Report Figures"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
+                      dev = "png", dpi=300)
+
+# Load packages ----
+library(tidyverse)
+library(scales)
+library(patchwork)
+library(ggthemes)
+library(rcartocolor)
+
+# Data ----
+surv <- read_csv("cna_data_all.csv") # combined surveys
+surv <- surv %>% 
+  mutate(data_point = case_when(is.na(data_point) ~ "No response given",
+                                .default = data_point))
+pops <- read_csv("population_benchmarks.csv") # population benchmarks
+
+pal_safe <- carto_pal(7, "Safe")
+# "#88CCEE" "#CC6677" "#DDCC77" "#117733" "#332288" "#AA4499" "#888888"
+
+# Colors ----
+
+pop_bench <- "#88BDE6"
+survey_pal <- "#B276B2" # few_pal(palette = "Medium")(6)[[6]]
+n2w <- "#FAA43A" #few_pal(palette = "Medium")(3)[[2]]
+uw <- "#7ED98C"
+
+show_col(few_pal()(7))
+show_col(few_pal("Dark")(7))
+show_col(few_pal("Light")(7))
+show_col(few_pal("Medium")(7))
+```
+
+
+```{r, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+# 1. Network2Work Income distribution-percent ----
+wage <- surv %>% filter(str_detect(survey_question, "Wages")) %>% 
+  mutate(data_point = factor(data_point),
+         data_point = fct_shift(data_point, -1))
+
+wage %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), fill = survey, label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_bar(stat = "identity", width = 0.8) +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Responses") +
+  scale_fill_manual(values = n2w) +
+  labs(title = "Annual Personal Wages for Network2Work Job-Seekers at Intake") +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(color = "black", size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 12))
+
+```
+
+
+```{r, fig.width = 8, fig.height = 5, fig.retina = 2, fig.cap=""}
+# 2. N2W % employed compared to pop benchmark; UW % employed compared to pop benchmark] ----
+surv_emp <- surv %>% 
+  filter(str_detect(survey_question, "Employment"),
+         data_point == "Yes",
+         survey != "All") %>% 
+  mutate(survey_question = "Employment Status",
+         source = "Intake Survey") %>% 
+  rename(group = data_point, count = survey_count, 
+         total = survey_total, percent = survey_percent)
+pop_emp <- pops %>% 
+  filter(str_detect(question_equiv, "Employment"),
+         group == "Yes") %>% 
+  mutate(source = "Population Benchmark") %>% 
+  rename(survey = pop_equiv, survey_question = question_equiv,
+         count = estimate)
+
+emp <- bind_rows(surv_emp, pop_emp)
+
+emp %>% 
+  mutate(group = case_when(group == "Yes" ~ "Currently Employed",
+                           .default = group)) %>% 
+  ggplot(aes(x = group, y = round(percent, 0), fill = source, label = paste0(round(percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  scale_fill_manual(values = c(survey_pal, pop_bench), name = "") +
+  geom_text(position = position_dodge2(width = 0.8, preserve = "single"), 
+            vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Responses") +
+  facet_wrap(~survey, scales = "free") +
+  labs(title = "Employment Status: Currently Employed") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        strip.text = element_text(size = 16),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=13, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+```
+
+```{r, fig.width = 10.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+# 3. panel with N2W % housing unstable compared to benchmarks; panel with UW % housing unstable/moved combined compared to benchmarks ----
+surv_house <- surv %>% 
+  filter(str_detect(survey_question, "Housing"),
+         survey != "All") %>% 
+  mutate(data_point = if_else(
+    data_point == "Prior instability and/or frequent movement", 
+    "Unstable", data_point),
+    source = "Intake Survey") %>% 
+  group_by(survey, data_point) %>% 
+  summarize(survey_question = first(survey_question),
+            survey_count = sum(survey_count),
+            survey_total = first(survey_total),
+            survey_percent = sum(survey_percent)) %>% 
+  rename(group = data_point, count = survey_count, 
+         total = survey_total, percent = survey_percent) %>% 
+  filter(group == "Unstable") %>% 
+  mutate(group = "Unstable Housing", source = "Intake Survey")
+
+pop_house <- pops %>% 
+  filter(str_detect(question_equiv, "Housing")) %>% 
+  mutate(source = "Population Benchmark") %>% 
+  rename(survey = pop_equiv, survey_question = question_equiv,
+         count = estimate) %>% 
+  filter(group %in% c("Moved within Year", "Overcrowded", "Burdened", "Severely Burdened")) %>% 
+  mutate(group = if_else(group == "Burdened", "Rent Burdened", group),
+    group = if_else(group == "Severely Burdened", "Rent Burdened", group)) %>% 
+  group_by(survey, survey_question, group, source, estimate_units) %>% 
+  summarize(count = sum(count), total = first(total), percent = sum(percent))
+
+house <- bind_rows(surv_house, pop_house) %>% 
+  mutate(group = factor(group, 
+                        levels = c("Unstable Housing", "Overcrowded",
+                                   "Moved within Year", "Rent Burdened")))
+
+house %>% 
+  ggplot(aes(x = group, y = round(percent, 0), fill = source, label = paste0(round(percent, 0), "%") )) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  scale_fill_manual(values = c(survey_pal, pop_bench), name = "") +
+  geom_text(position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(12),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Responses") +
+  facet_wrap(~survey, scales = "free") +
+  labs(title = "Housing Challenges") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        strip.text = element_text(size = 16),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=13, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+  
+
+
+```
+
+```{r, fig.width = 15, fig.height = 7, fig.retina = 2, fig.cap=""}
+# 4. panel of % N2W transportation needs; panel of % UW transportation needs ----
+tran1 <- surv %>% filter(survey == "Network2Work" & str_detect(survey_question, "Transportation")) %>% 
+  mutate(data_point = case_when(is.na(data_point) ~ "No response given",
+                                .default = data_point),
+         data_point = factor(data_point, 
+                             levels = c("None", "Does not have reliable transportation", "Have car access, not reliable or registered", "Does not have driver’s license", "No response given")))
+
+p3 <- tran1 %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = n2w) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Job-Seekers") +
+  labs(title = "Network2Work Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+tran2 <- surv %>% filter(survey == "United Way" & str_detect(survey_question, "Transportation")) %>% 
+  mutate(data_point = case_when(is.na(data_point) ~ "No response given",
+                                .default = data_point),
+         data_point = factor(data_point, 
+                             levels = c("None", "Does not have reliable transportation", "Does not have driver’s license", "Transportation is a barrier to getting child to and from school", "Works longer hours than school day", "No response given")))
+
+p4 <- tran2 %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = uw) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(12),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Child-Care-Seekers") +
+  labs(title = "United Way Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+(p3 + p4) +
+  plot_annotation(title = 'Transportation Needs',
+                  caption = "",
+                  theme = theme(plot.title = element_text(size = 22),
+                                plot.subtitle = element_text(size = 16)))
+```
+
+```{r, fig.width = 15, fig.height = 12, fig.retina = 2, fig.cap=""}
+# A1. panel of UW % locality compared to benchmark; panel of N2W % locality compared to benchmark
+
+# N2W
+
+p1 <- surv %>% 
+  filter(survey_question == "Locality", survey == "Network2Work") %>%  
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = n2w) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Job-Seekers") +
+  labs(title = "Network2Work Intake Survey") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p2 <- pops %>% 
+  filter(pop_equiv == "Network2Work", question_equiv == "Locality") %>% 
+  mutate(group = str_extract(group, "(\\w+)")) %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Benchmark Population") +
+  labs(title = "N2W: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+# UW
+
+p3 <- surv %>% 
+  filter(survey_question == "Locality", survey == "United Way") %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = uw) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Child-Care-Seekers") +
+  labs(title = "United Way Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p4 <- pops %>% 
+  filter(pop_equiv == "United Way", question_equiv == "Locality") %>% 
+  mutate(group = str_extract(group, "(\\w+)")) %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Benchmark Population") +
+  labs(title = "United Way: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+((p1 + p2) / (p3 + p4))  +
+  plot_annotation(title = 'Locality',
+                  caption = "",
+                  theme = theme(plot.title = element_text(size = 22),
+                                plot.subtitle = element_text(size = 16)))
+
+```
+
+```{r, fig.width = 14, fig.height = 12, fig.retina = 2, fig.cap=""}
+# A2. panel of UW % age compared to benchmark; panel of N2W % age compared to benchmark
+# N2W
+
+p1 <- surv %>% 
+  filter(survey_question == "Age", survey == "Network2Work") %>%  
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = n2w) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Job-Seekers") +
+  labs(title = "Network2Work Intake Survey") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p2 <- pops %>% 
+  filter(pop_equiv == "Network2Work", question_equiv == "Age") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "N2W: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+# UW
+
+p3 <- surv %>% 
+  filter(survey_question == "Age", survey == "United Way") %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = uw) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Child-Care-Seekers") +
+  labs(title = "United Way Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p4 <- pops %>% 
+  filter(pop_equiv == "United Way", question_equiv == "Age") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "United Way: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+((p1 + p2) / (p3 + p4))  +
+  plot_annotation(title = 'Age',
+                  caption = "",
+                  theme = theme(plot.title = element_text(size = 22),
+                                plot.subtitle = element_text(size = 16)))
+```
+
+```{r, fig.width = 14, fig.height = 12, fig.retina = 2, fig.cap=""}
+# A3. panel of UW % gender compared to benchmark; panel of N2W % gender compared to benchmark ----
+# N2W
+
+p1 <- surv %>% 
+  filter(survey_question == "Gender", survey == "Network2Work") %>%  
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = n2w) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Job-Seekers") +
+  labs(title = "Network2Work Intake Survey") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p2 <- pops %>% 
+  filter(pop_equiv == "Network2Work", question_equiv == "Sex") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "N2W: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+# UW
+
+p3 <- surv %>% 
+  filter(survey_question == "Gender", survey == "United Way") %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = uw) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Child-Care-Seekers") +
+  labs(title = "United Way Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p4 <- pops %>% 
+  filter(pop_equiv == "United Way", question_equiv == "Sex") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "United Way: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+((p1 + p2) / (p3 + p4))  +
+  plot_annotation(title = 'Gender',
+                  caption = "",
+                  theme = theme(plot.title = element_text(size = 22),
+                                plot.subtitle = element_text(size = 16)))
+```
+
+```{r, fig.width = 14, fig.height = 12, fig.retina = 2, fig.cap=""}
+# A4. panel of UW % race acompared to benchmark; panel of N2W % race compared to benchmark ----
+
+p1 <- surv %>% 
+  filter(survey_question== "Race", survey == "Network2Work", data_point != "Hawaiian/Pacific Islander") %>%  
+  mutate(data_point = factor(data_point, levels = c("American Indian/Alaska Native","Asian","Black", "Multiracial","White","Prefer not to answer", "No response given"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = n2w) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Job-Seekers") +
+  labs(title = "Network2Work Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p2 <- pops %>% 
+  filter(pop_equiv == "Network2Work", question_equiv == "Race", group != "Hawaiian/Pacific Islander") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "N2W: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+# UW
+
+p3 <- surv %>% 
+  filter(survey_question == "Race", survey == "United Way", data_point != "Hawaiian/Pacific Islander") %>% 
+  mutate(data_point = factor(data_point, levels = c("American Indian/Alaska Native","Asian","Black", "Multiracial","White","Prefer not to answer", "No response given"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = uw) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Child-Care-Seekers") +
+  labs(title = "United Way Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p4 <- pops %>% 
+  filter(pop_equiv == "United Way", question_equiv == "Race") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "United Way: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+((p1 + p2) / (p3 + p4))  +
+  plot_annotation(title = 'Race',
+                  caption = "",
+                  theme = theme(plot.title = element_text(size = 22),
+                                plot.subtitle = element_text(size = 16)))
+
+```
+
+```{r, fig.width = 14, fig.height = 12, fig.retina = 2, fig.cap=""}
+# A5. panel of UW % ethnicity compared to benchmark; panel of N2W % race and ethnicity compared to benchmark ----
+
+p1 <- surv %>% 
+  filter(survey_question== "Ethnicity", survey == "Network2Work") %>% 
+  mutate(data_point = factor(data_point, levels = c("Hispanic", "Not Hispanic", "No response given"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = n2w) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Job-Seekers") +
+  labs(title = "Network2Work Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p2 <- pops %>% 
+  filter(pop_equiv == "Network2Work", question_equiv == "Ethnicity") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "N2W: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+# UW
+
+p3 <- surv %>% 
+  filter(survey_question == "Ethnicity", survey == "United Way") %>% 
+  mutate(data_point = factor(data_point, levels = c("Hispanic", "Not Hispanic", "No response given"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = uw) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Child-Care-Seekers") +
+  labs(title = "United Way Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p4 <- pops %>% 
+  filter(pop_equiv == "United Way", question_equiv == "Ethnicity") %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Benchmark Population") +
+  labs(title = "United Way: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+((p1 + p2) / (p3 + p4))  +
+  plot_annotation(title = 'Ethnicity',
+                  caption = "",
+                  theme = theme(plot.title = element_text(size = 22),
+                                plot.subtitle = element_text(size = 16)))
+
+```
+
+```{r, fig.width = 16, fig.height = 12, fig.retina = 2, fig.cap=""}
+# A6. panel of UW % education compared to benchmark; panel of N2W % education compared to benchmark ----
+
+p1 <- surv %>% 
+  filter(survey_question == "Education Level", survey == "Network2Work") %>% 
+  mutate(data_point = factor(data_point, 
+                             levels = c("Did Not Complete High School", "GED", "High School Graduate", "Some College or Advanced Training", "Associate's Degree", "Bachelor's Degree", "Graduate Degree", "No response given"))) %>%  
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = n2w) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(15),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Job-Seekers") +
+  labs(title = "Network2Work Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p2 <- pops %>% 
+  filter(pop_equiv == "Network2Work", question_equiv == "Education Level")  %>% 
+  mutate(group = factor(group, 
+                             levels = c("Did Not Complete High School", "GED", "High School Graduate", "Some College or Advanced Training", "Associate's Degree", "Bachelor's Degree", "Graduate Degree"))) %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(12),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Benchmark Population") +
+  labs(title = "N2W: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+# UW
+p3 <- surv %>% 
+  filter(survey_question == "Education Level", survey == "United Way")%>% 
+  mutate(data_point = factor(data_point, 
+                             levels = c("Did Not Complete High School", "GED", "High School Graduate", "Some College or Advanced Training", "Associate's Degree", "Bachelor's Degree", "Graduate Degree", "No response given"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = uw) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(12),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Child-Care-Seekers") +
+  labs(title = "United Way Intake Survey") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+p4 <- pops %>% 
+  filter(pop_equiv == "United Way", question_equiv == "Education Level") %>% 
+  mutate(group = factor(group, 
+                             levels = c("Did Not Complete High School", "GED", "High School Graduate", "Some College or Advanced Training", "Associate's Degree", "Bachelor's Degree", "Graduate Degree"))) %>% 
+  ggplot(aes(x = group, y = round(percent, 0), label = paste0(round(percent, 0), "%") )) +  
+  geom_col(fill = pop_bench) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(12),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "% of Benchmark Population") +
+  labs(title = "United Way: Population Benchmark") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 18, margin=margin(0,0,30,0)),         
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+
+((p1 + p2) / (p3 + p4))  +
+  plot_annotation(title = 'Education level',
+                  caption = "",
+                  theme = theme(plot.title = element_text(size = 22),
+                                plot.subtitle = element_text(size = 16)))
+
+```
