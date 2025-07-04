@@ -21,6 +21,9 @@ uw_fy_24 <- read_csv("UnitedWay/data/CE_FY24_CNA.csv") %>%
 uw_fy_24 <- uw_fy_24 %>% 
   filter(locality %in% c("Albemarle", "Charlottesville", "Fluvanna", "Greene", "Louisa", "Nelson"))
 
+# MACAA
+mac <- read_excel("MACAA/data/MACAA Client Data Pull #2.xlsx")
+
 # Compare survey data
 # n2w_cols <- colnames(n2w_fy_23_24)
 # n2w_qs <- data.frame(survey = "N2W", questions = n2w_cols)
@@ -95,7 +98,24 @@ age_uw <- uw_fy_24 %>%
   rename(data_point = parent_age,
          survey_count = n)
 
-age <- rbind(age_n2w, age_uw) %>%
+age_mac <- mac %>% 
+  mutate(age = year(as.period(interval(mdy(DOB), mdy("01/01/2025")))),
+         age_bins = case_when(age < 19 ~ "18 and under",
+                              age >=19 & age < 25 ~ "19 to 24",
+                              age >=35 & age < 40 ~ "25 to 39",
+                              age >-40 & age < 55 ~ "40 to 54",
+                              age >= 55 & age < 60 ~ "55 to 59",
+                              age >= 60 ~ "60+")) %>% 
+  count(age_bins) %>% 
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Age",
+         survey = "MACAA") %>% 
+  rename(data_point = age_bins,
+         survey_count = n)
+
+age <- rbind(age_n2w, age_uw, age_mac) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 age_all <- age %>% 
@@ -139,7 +159,25 @@ race_uw <- uw_fy_24 %>%
   rename(data_point = group_race_check_all_that_apply,
          survey_count = n)
 
-race <- rbind(race_n2w, race_uw) %>%
+race_mac <- mac %>% 
+  mutate(race = case_when(
+    Race == "White" ~ "White",
+    Race == "Black or African American" ~ "Black",
+    Race == "Asian" ~ "Asian",
+    Race == "American Indian or Alaska Native" ~ "American Indian/Alaska Native",
+    Race == "Biracial/Multi-racial" | Race == "Multi-Racial" ~ "Multiracial",
+    TRUE ~ NA_character_
+  )) %>% 
+  count(race) %>% 
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Race",
+         survey = "MACAA") %>% 
+  rename(data_point = race,
+         survey_count = n)
+
+race <- rbind(race_n2w, race_uw, race_mac) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 race_all <- race %>% 
@@ -178,7 +216,22 @@ ethn_uw <- uw_fy_24 %>%
   rename(data_point = group_hispanic_latino,
          survey_count = n)
 
-ethnicity <- rbind(ethn_n2w, ethn_uw) %>%
+ethn_mac <- mac %>% 
+  mutate(hisp = case_when(
+    Ethnicity == "Hispanic / Latino" ~ "Hispanic",
+    Ethnicity == "Non-Hispanic / Not Latino" ~ "Not Hispanic",
+    TRUE ~ NA_character_
+  )) %>% 
+  count(hisp) %>% 
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Ethnicity",
+         survey = "MACAA") %>% 
+  rename(data_point = hisp,
+         survey_count = n)
+
+ethnicity <- rbind(ethn_n2w, ethn_uw, ethn_mac) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 ethn_all <- ethnicity %>% 
@@ -215,7 +268,23 @@ gender_uw <- uw_fy_24 %>%
   rename(data_point = group_gender,
          survey_count = n)
 
-gender <- rbind(gender_n2w, gender_uw) %>%
+gender_mac <- mac %>% 
+  mutate(gender = case_when(
+    Gender == "Male" ~ "Male",
+    Gender == "Female" ~ "Female",
+    Gender == "Unknown" ~ NA_character_,
+    TRUE ~ "Other"
+  )) %>% 
+  count(gender) %>% 
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Gender",
+         survey = "MACAA") %>% 
+  rename(data_point = gender,
+         survey_count = n)
+
+gender <- rbind(gender_n2w, gender_uw, gender_mac) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 gender_all <- gender %>% 
@@ -257,7 +326,29 @@ educ_uw <- uw_fy_24 %>%
   rename(data_point = group_highest_education_completed,
          survey_count = n)
 
-educ_level <- rbind(educ_n2w, educ_uw) %>%
+educ_mac <- mac %>% 
+  mutate(age = year(as.period(interval(mdy(DOB), mdy("01/01/2025"))))) %>% 
+  filter(age > 18) %>% 
+  mutate(educ = case_when(
+    HighestEducation %in% c("0 - 8","9-12/Non-Graduate") ~ "Did Not Complete High School",
+    HighestEducation == "12Yrs (Completed High School/GED)" ~ "High School Graduate",
+    HighestEducation == "GED" ~ "GED",
+    HighestEducation == "14 Yrs (AA Degree)" ~ "Associate's Degree",
+    HighestEducation %in% c("16 Yrs (Received BA/BS)","16 Ys + (only BA/BS Received not a Graduate Degree)", "2 or 4 years College Graduate") ~ "Bachelor's Degree",
+    HighestEducation == "18 Yrs (Graduate Degree (i.e. Master's Degree/ Law Degree/ MBA))" ~ "Graduate Degree",
+    HighestEducation == "Unknown" ~ NA_character_,
+    TRUE ~ "Some College or Advanced Training"
+  )) %>% 
+  count(educ) %>% 
+  arrange(desc(n)) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Education Level",
+         survey = "MACAA") %>% 
+  rename(data_point = educ,
+         survey_count = n)
+  
+educ_level <- rbind(educ_n2w, educ_uw, educ_mac) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 educ_level_all <- educ_level %>% 
@@ -453,7 +544,23 @@ employed_uw <- uw_fy_24 %>%
   rename(data_point = group_what_is_the_primary_parent_guardians_employment_status_select_all_that_apply,
          survey_count = n)
 
-employed <- rbind(employed_n2w, employed_uw) %>%
+employ_mac <- mac %>% 
+  mutate(age = year(as.period(interval(mdy(DOB), mdy("01/01/2025"))))) %>% 
+  filter(age > 18) %>% 
+  mutate(emp = case_when(
+    str_detect(EmpStatus, "Employed|Employment") ~ "Yes",
+    EmpStatus == "Unknown" ~ NA_character_,
+    TRUE ~ "No"
+  )) %>% 
+  count(emp) %>% 
+  mutate(survey_total = sum(n),
+         survey_percent = round((n/survey_total) * 100, 2),
+         survey_question = "Employment Status (Currently Working)",
+         survey = "MACAA") %>% 
+  rename(data_point = emp,
+         survey_count = n)
+
+employed <- rbind(employed_n2w, employed_uw, employ_mac) %>%
   select(survey, survey_question, data_point, survey_count, survey_total, survey_percent)
 
 employed_all <- employed %>% 
@@ -1038,4 +1145,14 @@ wb_sheets <- list("Education Level" = educ_level,
 
 write.xlsx(wb_sheets, file = "CNA_Survey_Data.xlsx", keepNA = TRUE)
 
-
+# report summaries
+n2w_fy_23_24 %>% 
+  mutate(childneeds = case_when(
+    str_detect(fam_childcarefind, "Yes") ~ "Yes",
+    str_detect(fam_childcarefund, "Yes") ~ "Yes",
+    str_detect(fam_afterschoolfind, "Yes") ~ "Yes",
+    str_detect(fam_afterschoolfund, "Yes") ~ "Yes",
+    fam_parent == "No" | fam_numchildren == "0" | fam_numchildren == "None, my children aren't living with me" ~ "Not Parenting",
+    TRUE ~ "No"
+  )) %>% 
+  count(childneeds)
