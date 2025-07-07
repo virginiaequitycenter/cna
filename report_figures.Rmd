@@ -22,14 +22,12 @@ surv <- surv %>%
 pops <- read_csv("population_benchmarks.csv") # population benchmarks
 
 pal_safe <- carto_pal(7, "Safe")
-# "#88CCEE" "#CC6677" "#DDCC77" "#117733" "#332288" "#AA4499" "#888888"
-
-# Colors ----
 
 pop_bench <- "#88BDE6"
 survey_pal <- "#B276B2" # few_pal(palette = "Medium")(6)[[6]]
 n2w <- "#FAA43A" #few_pal(palette = "Medium")(3)[[2]]
 uw <- "#7ED98C"
+maca <- "#F17CB0"
 
 show_col(few_pal()(7))
 show_col(few_pal("Dark")(7))
@@ -1017,4 +1015,231 @@ p4 <- pops %>%
                   theme = theme(plot.title = element_text(size = 22),
                                 plot.subtitle = element_text(size = 16)))
 
+```
+
+```{r}
+## MACA data
+# MACA Age ----
+
+p1 <- surv %>% 
+  filter(survey_question == "Age", survey == "MACAA") %>%  
+  ggplot(aes(x = data_point, y = round(survey_percent, 0), label = paste0(round(survey_percent, 0), "%") )) +  
+  geom_col(fill = maca) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Responses") +
+  labs(title = "Age",
+       subtitle = "MACAA Survey Data") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 22),         
+        plot.subtitle = element_text(size = 16, margin=margin(0,0,30,0)),
+        plot.caption = element_text(size = 12))
+
+p1
+```
+
+```{r}
+## MACAA data
+# MACAA Race ----
+
+p1 <- surv %>% 
+  filter(survey_question == "Race", survey == "MACAA") %>% 
+  mutate(data_point = factor(data_point, levels = c("American Indian/Alaska Native","Asian","Black", "Multiracial","White","No response given"))) %>%
+  ggplot(aes(x = data_point, y = round(survey_percent, 1), label = case_when(survey_percent < 1 ~ paste0(round(survey_percent, 1), "%"),
+                                                                             .default = paste0(round(survey_percent, 0), "%")))) +  
+  geom_col(fill = maca) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Responses") +
+  labs(title = "Race",
+       subtitle = "MACAA Survey Data") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 22),         
+        plot.subtitle = element_text(size = 16, margin=margin(0,0,30,0)),
+        plot.caption = element_text(size = 12))
+
+p1
+```
+
+```{r}
+## MACAA data
+# MACAA Ethnicity ----
+
+p1 <- surv %>% 
+  filter(survey_question == "Ethnicity", survey == "MACAA") %>% 
+  mutate(data_point = factor(data_point, levels = c("Hispanic", "Not Hispanic", "No response given"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 1), label = case_when(survey_percent < 1 ~ paste0(round(survey_percent, 1), "%"),
+                                                                             .default = paste0(round(survey_percent, 0), "%")))) +  
+  geom_col(fill = maca) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Responses") +
+  labs(title = "Ethnicity",
+       subtitle = "MACAA Survey Data") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 22),         
+        plot.subtitle = element_text(size = 16, margin=margin(0,0,30,0)),
+        plot.caption = element_text(size = 12))
+
+p1
+```
+
+```{r}
+## MACAA data
+# MACAA Gender ----
+
+p1 <- surv %>% 
+  filter(survey_question == "Gender", survey == "MACAA") %>% 
+  # mutate(data_point = factor(data_point, levels = c("Hispanic", "Not Hispanic", "No response given"))) %>% 
+  ggplot(aes(x = data_point, y = round(survey_percent, 1), label = case_when(survey_percent < 1 ~ paste0(round(survey_percent, 1), "%"),
+                                                                             .default = paste0(round(survey_percent, 0), "%")))) +  
+  geom_col(fill = maca) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Responses") +
+  labs(title = "Gender",
+       subtitle = "MACAA Survey Data") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 22),         
+        plot.subtitle = element_text(size = 16, margin=margin(0,0,30,0)),
+        plot.caption = element_text(size = 12))
+
+p1
+```
+
+```{r, fig.width=8}
+## MACAA data
+# MACAA Education ----
+
+p1 <- surv %>% 
+  filter(survey_question == "Education Level", survey == "MACAA") %>% 
+  mutate(data_point = factor(data_point,
+                             levels = c("Did Not Complete High School", "GED", "High School Graduate", "Some College or Advanced Training", "Associate's Degree", "Bachelor's Degree", "Graduate Degree", "No response given"))) %>%
+  ggplot(aes(x = data_point, y = round(survey_percent, 1), label = case_when(survey_percent < 1 ~ paste0(round(survey_percent, 1), "%"),
+                                                                             .default = paste0(round(survey_percent, 0), "%")))) +  
+  geom_col(fill = maca) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Responses") +
+  labs(title = "Education level",
+       subtitle = "MACAA Survey Data") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 22),         
+        plot.subtitle = element_text(size = 16, margin=margin(0,0,30,0)),
+        plot.caption = element_text(size = 12))
+
+p1
+```
+
+```{r}
+## MACAA data
+# MACAA Employment status ----
+
+p1 <- surv %>% 
+  filter(survey_question == "Employment Status (Currently Working)", survey == "MACAA") %>% 
+  mutate(data_point = factor(data_point, levels = c("Yes", "No", "No response given"), labels = c("Currently Employed", "Not Currently Employed", "No response given"))) %>%
+  ggplot(aes(x = data_point, y = round(survey_percent, 1), label = case_when(survey_percent < 1 ~ paste0(round(survey_percent, 1), "%"),
+                                                                             .default = paste0(round(survey_percent, 0), "%")))) +  
+  geom_col(fill = maca) +
+  geom_text(vjust = -0.5, size = 4.5) +
+  scale_x_discrete(labels = scales::label_wrap(10),
+                   name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "% of Responses") +
+  labs(title = "Employment Status (Currently Working)",
+       subtitle = "MACAA Survey Data") +
+  coord_cartesian(expand=FALSE, clip="off") +
+  theme_minimal() +
+  theme(legend.position = "top",
+        legend.justification.top = "left",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 13),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 13),
+        plot.title = element_text(size = 22),         
+        plot.subtitle = element_text(size = 16, margin=margin(0,0,30,0)),
+        plot.caption = element_text(size = 12))
+
+p1
 ```
